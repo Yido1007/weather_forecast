@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'provider/weather_provider.dart';
+import 'widget/weather_info.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,8 +11,52 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _cityController = TextEditingController();
+
+  @override
+  void dispose() {
+    _cityController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final weatherProvider = Provider.of<WeatherProvider>(context);
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Hava Durumu"), centerTitle: true),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _cityController,
+              decoration: InputDecoration(
+                labelText: "Şehir adı",
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    final city = _cityController.text.trim();
+                    if (city.isNotEmpty) {
+                      weatherProvider.fetchWeather(city);
+                    }
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            if (weatherProvider.isLoading) const CircularProgressIndicator(),
+            if (weatherProvider.errorMessage != null)
+              Text(
+                weatherProvider.errorMessage!,
+                style: const TextStyle(color: Colors.red),
+              ),
+            if (weatherProvider.weather != null)
+              WeatherInfo(weather: weatherProvider.weather!),
+          ],
+        ),
+      ),
+    );
   }
 }

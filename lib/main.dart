@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/home.dart';
-import 'providers/weather_provider.dart';
+import 'provider/weather_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
