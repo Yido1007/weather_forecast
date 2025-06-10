@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../model/weather.dart';
+import '../provider/favorite.dart';
 
 class WeatherInfo extends StatelessWidget {
   final Weather weather;
@@ -15,10 +17,40 @@ class WeatherInfo extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
-              weather.cityName,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  weather.cityName,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Consumer<FavoriteProvider>(
+                  builder: (context, favoriteProvider, _) {
+                    final isFavorite = favoriteProvider.isFavorite(
+                      weather.cityName,
+                    );
+                    return IconButton(
+                      icon: Icon(
+                        isFavorite ? Icons.star : Icons.star_border,
+                        color: isFavorite ? Colors.amber : Colors.grey,
+                      ),
+                      onPressed: () {
+                        if (isFavorite) {
+                          favoriteProvider.removeFavorite(weather.cityName);
+                        } else {
+                          favoriteProvider.addFavorite(weather.cityName);
+                        }
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
+
             const SizedBox(height: 10),
             Image.network(
               'https://openweathermap.org/img/wn/${weather.iconCode}@2x.png',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/home.dart';
+import 'provider/favorite.dart';
 import 'provider/theme.dart';
 import 'provider/weather.dart';
 import 'theme/app_theme.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
+        ChangeNotifierProvider(create: (_) => FavoriteProvider()),
       ],
       child: const MyApp(),
     ),
