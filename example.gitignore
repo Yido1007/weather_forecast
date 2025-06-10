@@ -1,0 +1,6 @@
+Text(
+  "Sıcaklık",
+  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark
+      ? AppColors.darkText
+      : AppColors.lightText),
+)

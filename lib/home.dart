@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'provider/weather_provider.dart';
+import 'provider/weather.dart';
+import 'screen/static/settings.dart';
 import 'widget/weather_info.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,7 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
     final weatherProvider = Provider.of<WeatherProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Hava Durumu"), centerTitle: true),
+      appBar: AppBar(
+        title: const Text("Hava Durumu"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
+            },
+          ),
+        ],
+      ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -45,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const Gap(10),
             if (weatherProvider.isLoading) const CircularProgressIndicator(),
             if (weatherProvider.errorMessage != null)
               Text(
