@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_forecast/screen/static/settings.dart';
+import '../model/weather.dart';
 import '../provider/favorite.dart';
+import '../provider/weather.dart';
+import '../screen/static/settings.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -24,45 +26,80 @@ class AppDrawer extends StatelessWidget {
                   "🌤️ Hava Durumu",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SettingsScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                IconButton(
+                  icon: const Icon(Icons.settings, color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
           ),
-          if (favorites.isEmpty)
-            const ListTile(
-              title: Text("Henüz favori şehir yok"),
-              leading: Icon(Icons.star_border),
-            )
-          else
-            ...favorites.map(
-              (city) => ListTile(
-                title: Text(city),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    favoriteProvider.removeFavorite(city);
+          Expanded(
+            child: Consumer<FavoriteProvider>(
+              builder: (context, favoriteProvider, _) {
+                final favoriteCities = favoriteProvider.favorites;
+                if (favoriteCities.isEmpty) {
+                  return const Center(child: Text('Favori şehir yok.'));
+                }
+                return ListView.builder(
+                  itemCount: favoriteCities.length,
+                  itemBuilder: (context, index) {
+                    final cityName = favoriteCities[index];
+
+                    return FutureBuilder<WeatherData>(
+                      future: Provider.of<WeatherProvider>(
+                        context,
+                        listen: false,
+                      ).fetchWeatherData(cityName),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const ListTile(title: Text("Yükleniyor..."));
+                        } else if (snapshot.hasError || !snapshot.hasData) {
+                          return ListTile(
+                            title: Text(cityName),
+                            subtitle: const Text("Veri alınamadı"),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                favoriteProvider.removeFavorite(cityName);
+                              },
+                            ),
+                          );
+                        } else {
+                          final weather = snapshot.data!;
+                          return ListTile(
+                            leading: Image.network(weather.iconUrl, width: 40),
+                            title: Text(weather.cityName),
+                            subtitle: Text('${weather.temperature}°C'),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                favoriteProvider.removeFavorite(cityName);
+                              },
+                            ),
+                            onTap: () {
+                              Provider.of<WeatherProvider>(
+                                context,
+                                listen: false,
+                              ).fetchWeather(cityName);
+                              Navigator.pop(context);
+                            },
+                          );
+                        }
+                      },
+                    );
                   },
-                ),
-                onTap: () {
-                  // TODO: O şehre geçiş yapılacaksa burada yapılabilir
-                },
-              ),
+                );
+              },
             ),
+          ),
         ],
       ),
     );

@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../model/weather.dart';
 import '../service/weather_service.dart';
-
 
 class WeatherProvider with ChangeNotifier {
   final WeatherService _weatherService = WeatherService();
@@ -27,6 +29,22 @@ class WeatherProvider with ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future<WeatherData> fetchWeatherData(String cityName) async {
+    // Bu, tek seferlik veriyi getirir ama provider durumunu etkilemez
+    final response = await http.get(
+      Uri.parse(
+        'https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=1635f02e1038c39b416d661b002105e0&units=metric',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return WeatherData.fromJson(data);
+    } else {
+      throw Exception('Veri alınamadı');
     }
   }
 }
