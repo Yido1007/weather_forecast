@@ -52,48 +52,53 @@ class AppDrawer extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final cityName = favoriteCities[index];
 
-                    return FutureBuilder<WeatherData>(
-                      future: Provider.of<WeatherProvider>(
-                        context,
-                        listen: false,
-                      ).fetchWeatherData(cityName),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const ListTile(title: Text("Yükleniyor..."));
-                        } else if (snapshot.hasError || !snapshot.hasData) {
-                          return ListTile(
-                            title: Text(cityName),
-                            subtitle: const Text("Veri alınamadı"),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                favoriteProvider.removeFavorite(cityName);
-                              },
-                            ),
-                          );
-                        } else {
-                          final weather = snapshot.data!;
-                          return ListTile(
-                            leading: Image.network(weather.iconUrl, width: 40),
-                            title: Text(weather.cityName),
-                            subtitle: Text('${weather.temperature}°C'),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                favoriteProvider.removeFavorite(cityName);
-                              },
-                            ),
-                            onTap: () {
-                              Provider.of<WeatherProvider>(
-                                context,
-                                listen: false,
-                              ).fetchWeather(cityName);
-                              Navigator.pop(context);
-                            },
-                          );
-                        }
+                    return Dismissible(
+                      key: Key(cityName),
+                      direction:
+                          DismissDirection.endToStart, // sağdan sola kaydırma
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: const Icon(Icons.delete, color: Colors.white),
+                      ),
+                      onDismissed: (direction) {
+                        favoriteProvider.removeFavorite(cityName);
                       },
+                      child: FutureBuilder<WeatherData>(
+                        future: Provider.of<WeatherProvider>(
+                          context,
+                          listen: false,
+                        ).fetchWeatherData(cityName),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const ListTile(title: Text("Yükleniyor..."));
+                          } else if (snapshot.hasError || !snapshot.hasData) {
+                            return ListTile(
+                              title: Text(cityName),
+                              subtitle: const Text("Veri alınamadı"),
+                            );
+                          } else {
+                            final weather = snapshot.data!;
+                            return ListTile(
+                              leading: Image.network(
+                                weather.iconUrl,
+                                width: 40,
+                              ),
+                              title: Text(weather.cityName),
+                              subtitle: Text('${weather.temperature}°C'),
+                              onTap: () {
+                                Provider.of<WeatherProvider>(
+                                  context,
+                                  listen: false,
+                                ).fetchWeather(cityName);
+                                Navigator.pop(context);
+                              },
+                            );
+                          }
+                        },
+                      ),
                     );
                   },
                 );
