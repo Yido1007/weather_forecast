@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import '../provider/weather.dart';
 import '../widget/drawer.dart';
-import '../widget/hourly.dart';
+import '../widget/hourly_weather.dart';
 import '../widget/weather_info.dart';
 
 class HomeScreen extends StatefulWidget {
