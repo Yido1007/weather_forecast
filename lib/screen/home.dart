@@ -28,7 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Hava Durumu"), centerTitle: true),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(
+        onCitySelected: (city) async {
+          _cityController.text = city; // update search box 
+          await weatherProvider.fetchWeather(city);
+          await weatherProvider.fetchHourlyWeather(city);
+          setState(() {});
+        },
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

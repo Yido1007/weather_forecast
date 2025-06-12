@@ -6,13 +6,11 @@ import '../provider/weather.dart';
 import '../screen/static/settings.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  final Function(String) onCitySelected;
+  const AppDrawer({super.key, required this.onCitySelected});
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProvider = Provider.of<FavoriteProvider>(context);
-    final favorites = favoriteProvider.favorites;
-
     return Drawer(
       child: Column(
         children: [
@@ -54,8 +52,7 @@ class AppDrawer extends StatelessWidget {
 
                     return Dismissible(
                       key: Key(cityName),
-                      direction:
-                          DismissDirection.endToStart, // sağdan sola kaydırma
+                      direction: DismissDirection.endToStart,
                       background: Container(
                         color: Colors.red,
                         alignment: Alignment.centerRight,
@@ -88,11 +85,8 @@ class AppDrawer extends StatelessWidget {
                               ),
                               title: Text(weather.cityName),
                               subtitle: Text('${weather.temperature}°C'),
-                              onTap: () {
-                                Provider.of<WeatherProvider>(
-                                  context,
-                                  listen: false,
-                                ).fetchWeather(cityName);
+                              onTap: () async {
+                                onCitySelected(cityName);
                                 Navigator.pop(context);
                               },
                             );
