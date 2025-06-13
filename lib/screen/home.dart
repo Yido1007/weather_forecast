@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
           await weatherProvider.fetchHourlyWeather(city);
           final lat = weatherProvider.weather?.lat;
           final lon = weatherProvider.weather?.lon;
-          print('lat: $lat, lon: $lon');
           if (lat != null && lon != null) {
             await weatherProvider.fetchWeeklyWeather(lat, lon);
           }
@@ -57,11 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.search),
-                      onPressed: () {
+                      onPressed: () async {
                         final city = _cityController.text.trim();
                         if (city.isNotEmpty) {
-                          weatherProvider.fetchWeather(city);
-                          weatherProvider.fetchHourlyWeather(city);
+                          await weatherProvider.fetchWeather(city);
+                          await weatherProvider.fetchHourlyWeather(city);
+                          final lat = weatherProvider.weather?.lat;
+                          final lon = weatherProvider.weather?.lon;
+                          if (lat != null && lon != null) {
+                            await weatherProvider.fetchWeeklyWeather(lat, lon);
+                          }
+                          setState(() {});
                         }
                       },
                     ),
@@ -78,7 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (weatherProvider.weather != null) ...[
                   WeatherInfo(weather: weatherProvider.weather!),
                   const Gap(10),
-                  SizedBox(height: 130, child: HourlyWeatherWidget()),
+                  SizedBox(height: 220, child: HourlyWeatherWidget()),
+                  Gap(10),
                   WeeklyWeatherWidget(),
                 ],
               ],
