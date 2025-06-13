@@ -1,15 +1,21 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_forecast/model/hourly_weather.dart';
 
+import '../model/daily_weather.dart';
 import '../model/weather.dart';
 import '../service/weather_service.dart';
 
 class WeatherProvider with ChangeNotifier {
-  final WeatherService _weatherService = WeatherService();
+  final String _apiKey = dotenv.env['OPENWEATHER_API_KEY']!;
+  final String _baseUrl = 'https://api.openweathermap.org/data/2.5';
 
+  final WeatherService _weatherService = WeatherService();
+  List<DailyWeather> _weeklyWeather = [];
+  List<DailyWeather> get weeklyWeather => _weeklyWeather;
   Weather? _weather;
   List<HourlyWeather> _hourlyWeather = [];
   bool _isLoading = false;
@@ -38,9 +44,7 @@ class WeatherProvider with ChangeNotifier {
   Future<WeatherData> fetchWeatherData(String cityName) async {
     // Bu, tek seferlik veriyi getirir ama provider durumunu etkilemez
     final response = await http.get(
-      Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=1635f02e1038c39b416d661b002105e0&units=metric',
-      ),
+      Uri.parse('$_baseUrl/weather?q=$cityName&appid=$_apiKey&units=metric'),
     );
 
     if (response.statusCode == 200) {
@@ -54,7 +58,7 @@ class WeatherProvider with ChangeNotifier {
   Future<void> fetchHourlyWeather(String city) async {
     print("Saatlik veri çekiliyor: $city");
     final url = Uri.parse(
-      'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=1635f02e1038c39b416d661b002105e0&units=metric&lang=tr',
+      '$_baseUrl/forecast?q=$city&appid=$_apiKey&units=metric&lang=tr',
     );
     final response = await http.get(url);
 
@@ -66,6 +70,22 @@ class WeatherProvider with ChangeNotifier {
       notifyListeners();
     } else {
       throw Exception('Saatlik hava durumu alınamadı');
+    }
+  }
+
+  Future<void> fetchWeeklyWeather(double lat, double lon) async {
+    final url = Uri.parse(
+      '$_baseUrl/onecall?lat=$lat&lon=$lon&exclude=current,minutely,hourly,alerts&appid=$_apiKey&units=metric&lang=tr',
+    );
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final List<dynamic> list = jsonData['daily'];
+      _weeklyWeather = list.map((item) => DailyWeather.fromJson(item)).toList();
+      notifyListeners();
+    } else {
+      throw Exception('Haftalık hava durumu alınamadı');
     }
   }
 }
