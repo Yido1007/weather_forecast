@@ -31,19 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(title: const Text("Hava Durumu"), centerTitle: true),
       drawer: AppDrawer(
         onCitySelected: (city) async {
+          _cityController.text = city;
+          await weatherProvider.fetchWeather(city);
           final lat = weatherProvider.weather?.lat;
           final lon = weatherProvider.weather?.lon;
-          _cityController.text = city; // update search box
-          await weatherProvider.fetchWeather(city);
-          if (lat != null && lon != null) {
-            await weatherProvider.fetchWeeklyWeather(lat, lon);
-          }
           if (lat != null && lon != null) {
             await weatherProvider.fetchHourlyWeather(lat, lon);
+            await weatherProvider.fetchWeeklyWeather(lat, lon);
           }
           setState(() {});
         },
       ),
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

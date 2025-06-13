@@ -85,7 +85,7 @@ class AppDrawer extends StatelessWidget {
                               ),
                               title: Text(weather.cityName),
                               subtitle: Text('${weather.temperature}°C'),
-                              onTap: () async {
+                              onTap: () {
                                 onCitySelected(cityName);
                                 Navigator.pop(context);
                               },
