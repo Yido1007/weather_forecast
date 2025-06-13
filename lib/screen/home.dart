@@ -5,6 +5,7 @@ import '../provider/weather.dart';
 import '../widget/drawer.dart';
 import '../widget/hourly_weather.dart';
 import '../widget/weather_info.dart';
+import '../widget/weekly_weather.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,9 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(title: const Text("Hava Durumu"), centerTitle: true),
       drawer: AppDrawer(
         onCitySelected: (city) async {
-          _cityController.text = city; // update search box 
+          _cityController.text = city; // update search box
           await weatherProvider.fetchWeather(city);
           await weatherProvider.fetchHourlyWeather(city);
+          final lat = weatherProvider.weather?.lat;
+          final lon = weatherProvider.weather?.lon;
+          print('lat: $lat, lon: $lon');
+          if (lat != null && lon != null) {
+            await weatherProvider.fetchWeeklyWeather(lat, lon);
+          }
           setState(() {});
         },
       ),
@@ -72,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   WeatherInfo(weather: weatherProvider.weather!),
                   const Gap(10),
                   SizedBox(height: 130, child: HourlyWeatherWidget()),
+                  WeeklyWeatherWidget(),
                 ],
               ],
             ),

@@ -3,12 +3,16 @@ class Weather {
   final double temperature;
   final String description;
   final String iconCode;
+  final double lat; // <-- yeni
+  final double lon; // <-- yeni
 
   Weather({
     required this.cityName,
     required this.temperature,
     required this.description,
     required this.iconCode,
+    required this.lat,
+    required this.lon,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) {
@@ -17,6 +21,8 @@ class Weather {
       temperature: json['main']['temp'].toDouble(),
       description: json['weather'][0]['description'],
       iconCode: json['weather'][0]['icon'],
+      lat: json['coord']['lat'].toDouble(),
+      lon: json['coord']['lon'].toDouble(),
     );
   }
 }

@@ -12,6 +12,7 @@ import '../service/weather_service.dart';
 class WeatherProvider with ChangeNotifier {
   final String _apiKey = dotenv.env['OPENWEATHER_API_KEY']!;
   final String _baseUrl = 'https://api.openweathermap.org/data/2.5';
+  final String _oneCall = 'https://api.openweathermap.org/data/3.0';
 
   final WeatherService _weatherService = WeatherService();
   List<DailyWeather> _weeklyWeather = [];
@@ -75,10 +76,9 @@ class WeatherProvider with ChangeNotifier {
 
   Future<void> fetchWeeklyWeather(double lat, double lon) async {
     final url = Uri.parse(
-      '$_baseUrl/onecall?lat=$lat&lon=$lon&exclude=current,minutely,hourly,alerts&appid=$_apiKey&units=metric&lang=tr',
+      '$_oneCall/onecall?lat=41.0082&lon=28.9784&appid=$_apiKey&units=metric',
     );
     final response = await http.get(url);
-
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       final List<dynamic> list = jsonData['daily'];
