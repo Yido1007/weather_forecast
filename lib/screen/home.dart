@@ -31,13 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(title: const Text("Hava Durumu"), centerTitle: true),
       drawer: AppDrawer(
         onCitySelected: (city) async {
-          _cityController.text = city; // update search box
-          await weatherProvider.fetchWeather(city);
-          await weatherProvider.fetchHourlyWeather(city);
           final lat = weatherProvider.weather?.lat;
           final lon = weatherProvider.weather?.lon;
+          _cityController.text = city; // update search box
+          await weatherProvider.fetchWeather(city);
           if (lat != null && lon != null) {
             await weatherProvider.fetchWeeklyWeather(lat, lon);
+          }
+          if (lat != null && lon != null) {
+            await weatherProvider.fetchHourlyWeather(lat, lon);
           }
           setState(() {});
         },
@@ -49,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Gap(8),
                 TextField(
                   controller: _cityController,
                   decoration: InputDecoration(
@@ -60,10 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         final city = _cityController.text.trim();
                         if (city.isNotEmpty) {
                           await weatherProvider.fetchWeather(city);
-                          await weatherProvider.fetchHourlyWeather(city);
                           final lat = weatherProvider.weather?.lat;
                           final lon = weatherProvider.weather?.lon;
                           if (lat != null && lon != null) {
+                            await weatherProvider.fetchHourlyWeather(lat, lon);
                             await weatherProvider.fetchWeeklyWeather(lat, lon);
                           }
                           setState(() {});

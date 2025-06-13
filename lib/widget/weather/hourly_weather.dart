@@ -13,6 +13,12 @@ class HourlyWeatherWidget extends StatelessWidget {
       return Center(child: Text('Saatlik hava durumu yok.'));
     }
 
+    // Her 2. saatte bir gösterilecek verileri hazırla
+    final List filteredHourly = [];
+    for (int i = 0; i < hourlyWeather.length; i += 2) {
+      filteredHourly.add(hourlyWeather[i]);
+    }
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -26,14 +32,14 @@ class HourlyWeatherWidget extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const Divider(thickness: 1),
-
             SizedBox(
               height: 110,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: hourlyWeather.length > 8 ? 8 : hourlyWeather.length,
+                itemCount:
+                    filteredHourly.length > 12 ? 12 : filteredHourly.length,
                 itemBuilder: (ctx, i) {
-                  final weather = hourlyWeather[i];
+                  final weather = filteredHourly[i];
                   return Container(
                     width: 80,
                     margin: const EdgeInsets.symmetric(horizontal: 4),

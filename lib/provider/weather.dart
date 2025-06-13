@@ -56,16 +56,15 @@ class WeatherProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchHourlyWeather(String city) async {
-    print("Saatlik veri çekiliyor: $city");
+  Future<void> fetchHourlyWeather(double lat, double lon) async {
     final url = Uri.parse(
-      '$_baseUrl/forecast?q=$city&appid=$_apiKey&units=metric&lang=tr',
+      'https://api.openweathermap.org/data/3.0/onecall?lat=$lat&lon=$lon&exclude=current,minutely,daily,alerts&appid=$_apiKey&units=metric&lang=tr',
     );
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      final List<dynamic> list = jsonData['list'];
+      final List<dynamic> list = jsonData['hourly'];
       _hourlyWeather =
           list.map((item) => HourlyWeather.fromJson(item)).toList();
       notifyListeners();

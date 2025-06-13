@@ -17,7 +17,7 @@ class HourlyWeather {
             json['dt'] * 1000,
             isUtc: true,
           ).toLocal(),
-      temperature: json['main']['temp'].toDouble(), // Doğru!
+      temperature: json['temp'].toDouble(),
       icon: json['weather'][0]['icon'],
     );
   }
