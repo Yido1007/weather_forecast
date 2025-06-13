@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import '../provider/weather.dart';
+import '../../provider/weather.dart';
 
 class WeeklyWeatherWidget extends StatelessWidget {
   const WeeklyWeatherWidget({super.key});

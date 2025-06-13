@@ -3,9 +3,9 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import '../provider/weather.dart';
 import '../widget/drawer.dart';
-import '../widget/hourly_weather.dart';
-import '../widget/weather_info.dart';
-import '../widget/weekly_weather.dart';
+import '../widget/weather/hourly_weather.dart';
+import '../widget/weather/weather_info.dart';
+import '../widget/weather/weekly_weather.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
