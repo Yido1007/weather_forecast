@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart'; 
 import '../../model/weather.dart';
+import '../../provider/favorite.dart'; 
+import '../../service/lottie_func.dart';
 import 'info_item.dart';
 
 class WeatherInfo extends StatelessWidget {
@@ -11,6 +15,10 @@ class WeatherInfo extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final iconColor = Theme.of(context).colorScheme.primary;
 
+    // FAVORİ KONTROLÜ
+    final favoriteProvider = Provider.of<FavoriteProvider>(context);
+    final isFavorite = favoriteProvider.isFavorite(weather.cityName);
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
@@ -20,23 +28,44 @@ class WeatherInfo extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Büyük hava durumu ikonu
-            Image.network(
-              'https://openweathermap.org/img/wn/${weather.iconCode}@4x.png',
+            Lottie.asset(
+              getLottieAssetForWeather(weather.iconCode),
               width: 90,
               height: 90,
             ),
             const SizedBox(width: 28),
-            // Bilgiler
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    weather.cityName,
-                    style: textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          weather.cityName,
+                          style: textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          isFavorite ? Icons.star : Icons.star_border,
+                          color: isFavorite ? Colors.amber : Colors.grey,
+                        ),
+                        tooltip:
+                            isFavorite
+                                ? "Favorilerden kaldır"
+                                : "Favorilere ekle",
+                        onPressed: () {
+                          if (isFavorite) {
+                            favoriteProvider.removeFavorite(weather.cityName);
+                          } else {
+                            favoriteProvider.addFavorite(weather.cityName);
+                          }
+                        },
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 2),
                   Text(
