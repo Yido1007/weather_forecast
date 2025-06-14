@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_forecast/service/lottie_func.dart';
 import '../../provider/weather.dart';
 
 class HourlyWeatherWidget extends StatelessWidget {
@@ -7,19 +9,25 @@ class HourlyWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final hourlyWeather = Provider.of<WeatherProvider>(context).hourlyWeather;
 
     if (hourlyWeather.isEmpty) {
-      return Center(child: Text('Saatlik hava durumu yok.'));
+      return Center(
+        child: Text(
+          'Saatlik hava durumu yok.',
+          style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
+        ),
+      );
     }
-
-    // Her 2. saatte bir gösterilecek verileri hazırla
     final List filteredHourly = [];
     for (int i = 0; i < hourlyWeather.length; i += 2) {
       filteredHourly.add(hourlyWeather[i]);
     }
 
     return Card(
+      color: colorScheme.surface,
       margin: const EdgeInsets.symmetric(vertical: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 4,
@@ -27,9 +35,12 @@ class HourlyWeatherWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Column(
           children: [
-            const Text(
+            Text(
               "Saatlik Hava Durumu Tahmini",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.primary,
+              ),
             ),
             const Divider(thickness: 1),
             SizedBox(
@@ -48,16 +59,30 @@ class HourlyWeatherWidget extends StatelessWidget {
                       children: [
                         Text(
                           '${weather.dateTime.hour}:00',
-                          style: const TextStyle(fontWeight: FontWeight.w600),
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: colorScheme.onSurface,
+                          ),
                         ),
-                        Image.network(
-                          'https://openweathermap.org/img/wn/${weather.icon}@2x.png',
+                        Container(
                           width: 40,
                           height: 40,
+                          decoration: BoxDecoration(
+                            color: colorScheme.primaryContainer,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Lottie.asset(
+                            getLottieAssetForWeather(weather.icon),
+                            fit: BoxFit.contain,
+                          ),
                         ),
+
                         Text(
                           '${weather.temperature.toStringAsFixed(1)}°C',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.secondary,
+                          ),
                         ),
                       ],
                     ),
