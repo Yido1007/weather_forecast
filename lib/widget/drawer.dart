@@ -15,17 +15,25 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(color: Colors.blue),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "🌤️ Hava Durumu",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontSize: 20,
+                  ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.settings, color: Colors.white),
+                  icon: Icon(
+                    Icons.settings,
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -49,15 +57,17 @@ class AppDrawer extends StatelessWidget {
                   itemCount: favoriteCities.length,
                   itemBuilder: (context, index) {
                     final cityName = favoriteCities[index];
-
                     return Dismissible(
                       key: Key(cityName),
                       direction: DismissDirection.endToStart,
                       background: Container(
-                        color: Colors.red,
+                        color: Theme.of(context).colorScheme.error,
                         alignment: Alignment.centerRight,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Icon(Icons.delete, color: Colors.white),
+                        child: Icon(
+                          Icons.delete,
+                          color: Theme.of(context).colorScheme.onError,
+                        ),
                       ),
                       onDismissed: (direction) {
                         favoriteProvider.removeFavorite(cityName);
