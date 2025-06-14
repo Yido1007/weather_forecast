@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
 import '../../model/weather.dart';
-import '../../provider/favorite.dart'; 
+import '../../provider/favorite.dart';
 import '../../service/lottie_func.dart';
 import 'info_item.dart';
 
