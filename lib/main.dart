@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/screen/home.dart';
+import 'package:weather_forecast/screen/static/splash.dart';
 import 'package:weather_forecast/theme/app_colors.dart';
 import 'provider/favorite.dart';
 import 'provider/theme.dart';
@@ -43,7 +44,11 @@ class MyApp extends StatelessWidget {
         colorScheme: darkColorScheme,
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      initialRoute: '/splash',
+      routes: {
+        '/splash': (_) => const SplashScreen(),
+        '/': (_) => const HomeScreen(),
+      },
     );
   }
 }
