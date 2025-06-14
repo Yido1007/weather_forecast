@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/model/hourly_weather.dart';
 
 import '../model/daily_weather.dart';
@@ -21,15 +22,30 @@ class WeatherProvider with ChangeNotifier {
   List<HourlyWeather> _hourlyWeather = [];
   bool _isLoading = false;
   String? _errorMessage;
+  String? _lastSearchedCity;
+  String? get lastSearchedCity => _lastSearchedCity;
 
   Weather? get weather => _weather;
   List<HourlyWeather> get hourlyWeather => _hourlyWeather;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
+  Future<void> saveLastSearchedCity(String city) async {
+    _lastSearchedCity = city;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('last_city', city);
+  }
+
+  Future<String?> loadLastSearchedCity() async {
+    final prefs = await SharedPreferences.getInstance();
+    _lastSearchedCity = prefs.getString('last_city');
+    return _lastSearchedCity;
+  }
+
   Future<void> fetchWeather(String cityName) async {
     _isLoading = true;
     _errorMessage = null;
+    await saveLastSearchedCity(cityName);
     notifyListeners();
 
     try {
@@ -67,6 +83,7 @@ class WeatherProvider with ChangeNotifier {
       final List<dynamic> list = jsonData['hourly'];
       _hourlyWeather =
           list.map((item) => HourlyWeather.fromJson(item)).toList();
+
       notifyListeners();
     } else {
       throw Exception('Saatlik hava durumu alınamadı');
