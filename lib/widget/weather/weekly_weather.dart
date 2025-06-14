@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
 import '../../provider/weather.dart';
+import '../../service/lottie_func.dart';
 
 class WeeklyWeatherWidget extends StatelessWidget {
   const WeeklyWeatherWidget({super.key});
@@ -9,12 +11,17 @@ class WeeklyWeatherWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weeklyWeather = Provider.of<WeatherProvider>(context).weeklyWeather;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     if (weeklyWeather.isEmpty) {
-      return const Text('Haftalık hava durumu verisi yok.');
+      return Text(
+        'Haftalık hava durumu verisi yok.',
+        style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
+      );
     }
-
     return Card(
+      color: colorScheme.surface,
       margin: const EdgeInsets.symmetric(vertical: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 4,
@@ -22,9 +29,12 @@ class WeeklyWeatherWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            const Text(
+            Text(
               "7 Günlük Hava Tahmini",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.primary,
+              ),
             ),
             const Divider(thickness: 1),
             ...weeklyWeather.map((day) {
@@ -36,13 +46,23 @@ class WeeklyWeatherWidget extends StatelessWidget {
                       width: 95,
                       child: Text(
                         "${["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"][day.date.weekday % 7]}",
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.onSurface,
+                        ),
                       ),
                     ),
-                    Image.network(
-                      'https://openweathermap.org/img/wn/${day.icon}@2x.png',
+                    Container(
                       width: 36,
                       height: 36,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primaryContainer.withOpacity(0.92),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Lottie.asset(
+                        getLottieAssetForWeather(day.icon),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                     Expanded(
                       child: Row(
@@ -50,16 +70,16 @@ class WeeklyWeatherWidget extends StatelessWidget {
                         children: [
                           Text(
                             "↑ ${day.maxTemp.toStringAsFixed(1)}°",
-                            style: const TextStyle(
-                              color: Colors.red,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.error,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Gap(16),
                           Text(
                             "↓ ${day.minTemp.toStringAsFixed(1)}°",
-                            style: const TextStyle(
-                              color: Colors.blue,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.primary,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
