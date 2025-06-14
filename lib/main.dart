@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_forecast/screen/core/boarding.dart';
 import 'package:weather_forecast/screen/home.dart';
 import 'package:weather_forecast/screen/static/splash.dart';
 import 'package:weather_forecast/theme/app_colors.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/splash',
       routes: {
+        '/boarding': (_) => const BoardingScreen(),
         '/splash': (_) => const SplashScreen(),
         '/': (_) => const HomeScreen(),
       },
