@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class WeeklyWeatherWidget extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "7 Günlük Hava Tahmini",
+              "weekly".tr(),
               style: textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: colorScheme.primary,

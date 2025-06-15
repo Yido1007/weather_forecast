@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -17,19 +18,19 @@ class _BoardingScreenState extends State<BoardingScreen> {
 
   final List<_OnboardInfo> _pages = [
     _OnboardInfo(
-      title: 'Güncel Hava Durumu',
-      description: 'Şehrinizin anlık ve haftalık hava durumunu görün.',
+      title: 'boarding-title-1'.tr(),
+      description: 'boarding-text-1'.tr(),
       imageAsset: 'assets/img/Raining-pana.png',
     ),
     _OnboardInfo(
-      title: 'Favori Şehirler',
-      description: 'Sık baktığınız şehirleri favorilerinize ekleyin.',
-      imageAsset: 'assets/img/Weather-cuate.png',
+      title: 'boarding-title-2'.tr(),
+      description: 'boarding-text-2'.tr(),
+      imageAsset: 'assets/img/Weather-rafiki.png',
     ),
     _OnboardInfo(
-      title: 'Kolay ve Hızlı',
-      description: 'Modern tasarım ve sade kullanım deneyimi.',
-      imageAsset: 'assets/img/Weather-rafiki.png',
+      title: 'boarding-title-3'.tr(),
+      description: 'boarding-text-2'.tr(),
+      imageAsset: 'assets/img/Weather-cuate.png',
     ),
   ];
 
@@ -39,7 +40,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
     if (mounted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(builder: (_) => HomeScreen()),
       );
     }
   }
@@ -141,7 +142,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
                 ),
                 onPressed: _nextPage,
                 child: Text(
-                  _pageIndex == _pages.length - 1 ? 'Başla' : 'İleri',
+                  _pageIndex == _pages.length - 1 ? 'start'.tr() : 'skip'.tr(),
                 ),
               ),
             ),

@@ -17,6 +17,7 @@ dependencies:
   gap: ^3.0.1
   lottie: ^3.3.1
   flex_color_scheme: ^8.2.0
+  easy_localization: ^3.0.7+1
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +30,4 @@ flutter:
     - .env
     - assets/lottie/
     - assets/img/
+    - assets/lang/

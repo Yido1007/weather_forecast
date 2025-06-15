@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Ayarlar")),
+      appBar: AppBar(title: Text('settings'.tr())),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -19,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Karanlık Mod", style: TextStyle(fontSize: 18)),
+                Text("theme".tr(), style: TextStyle(fontSize: 18)),
                 Switch(
                   value: themeProvider.isDarkMode,
                   onChanged: (value) {
@@ -40,6 +41,14 @@ class SettingsScreen extends StatelessWidget {
                 );
               },
               child: const Text("Onboarding Sıfırla"),
+            ),
+            ElevatedButton(
+              onPressed: () => context.setLocale(const Locale('en')),
+              child: const Text("English"),
+            ),
+            ElevatedButton(
+              onPressed: () => context.setLocale(const Locale('tr')),
+              child: const Text("Türkçe"),
             ),
           ],
         ),

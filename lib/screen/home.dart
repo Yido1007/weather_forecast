@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import '../widget/weather/weather_info.dart';
 import '../widget/weather/weekly_weather.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final weatherProvider = Provider.of<WeatherProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Hava Durumu"), centerTitle: true),
+      appBar: AppBar(title: Text('title'.tr()), centerTitle: true),
       drawer: AppDrawer(
         onCitySelected: (city) async {
           _cityController.text = city;
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,18 +97,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   autofocus: false,
                   controller: _cityController,
                   decoration: InputDecoration(
-                    labelText: "Şehir adı",
-                    border: const OutlineInputBorder(),
+                    labelText: "city".tr(),
+                    border: OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.search),
+                      icon: Icon(Icons.search),
                       onPressed: _searchCity,
                     ),
                   ),
                   onSubmitted: (_) => _searchCity(),
                 ),
-                const Gap(10),
+                Gap(10),
                 if (weatherProvider.isLoading)
-                  const Center(child: CircularProgressIndicator()),
+                  Center(child: CircularProgressIndicator()),
                 if (weatherProvider.errorMessage != null)
                   Text(
                     weatherProvider.errorMessage!,
@@ -117,9 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 if (weatherProvider.weather != null) ...[
                   WeatherInfo(weather: weatherProvider.weather!),
-                  const Gap(10),
+                  Gap(10),
                   SizedBox(height: 220, child: HourlyWeatherWidget()),
-                  const Gap(10),
+                  Gap(10),
                   WeeklyWeatherWidget(),
                 ],
               ],

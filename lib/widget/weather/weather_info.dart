@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -59,10 +60,7 @@ class WeatherInfo extends StatelessWidget {
                                   ? colorScheme.surfaceTint
                                   : colorScheme.outline,
                         ),
-                        tooltip:
-                            isFavorite
-                                ? "Favorilerden kaldır"
-                                : "Favorilere ekle",
+                        tooltip: isFavorite ? "unfav".tr() : "fav".tr(),
                         onPressed: () {
                           if (isFavorite) {
                             favoriteProvider.removeFavorite(weather.cityName);
@@ -97,21 +95,21 @@ class WeatherInfo extends StatelessWidget {
                     children: [
                       InfoItem(
                         icon: Icons.water_drop,
-                        label: "Nem",
+                        label: "humidity".tr(),
                         value: "${weather.humidity} %",
                         color: colorScheme.secondary,
                         textTheme: textTheme,
                       ),
                       InfoItem(
                         icon: Icons.air,
-                        label: "Rüzgar",
+                        label: "wind".tr(),
                         value: "${weather.windSpeed} m/s",
                         color: colorScheme.secondary,
                         textTheme: textTheme,
                       ),
                       InfoItem(
                         icon: Icons.compress,
-                        label: "Basınç",
+                        label: "pressure".tr(),
                         value: "${weather.pressure} hPa",
                         color: colorScheme.secondary,
                         textTheme: textTheme,

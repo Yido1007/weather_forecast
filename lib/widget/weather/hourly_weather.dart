@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,7 @@ class HourlyWeatherWidget extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "Saatlik Hava Durumu Tahmini",
+              "hourly".tr(),
               style: textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: colorScheme.primary,
