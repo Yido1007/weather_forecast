@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -8,14 +9,12 @@ import 'package:weather_forecast/model/hourly_weather.dart';
 
 import '../model/daily_weather.dart';
 import '../model/weather.dart';
-import '../service/weather_service.dart';
 
 class WeatherProvider with ChangeNotifier {
   final String _apiKey = dotenv.env['OPENWEATHER_API_KEY']!;
   final String _baseUrl = 'https://api.openweathermap.org/data/2.5';
   final String _oneCall = 'https://api.openweathermap.org/data/3.0';
 
-  final WeatherService _weatherService = WeatherService();
   List<DailyWeather> _weeklyWeather = [];
   List<DailyWeather> get weeklyWeather => _weeklyWeather;
   Weather? _weather;
@@ -42,24 +41,37 @@ class WeatherProvider with ChangeNotifier {
     return _lastSearchedCity;
   }
 
-  Future<void> fetchWeather(String cityName) async {
+  Future<void> fetchWeather(String city, BuildContext context) async {
     _isLoading = true;
     _errorMessage = null;
-    await saveLastSearchedCity(cityName);
     notifyListeners();
 
+    final lang = context.locale.languageCode;
+
     try {
-      _weather = await _weatherService.fetchWeather(cityName);
+      final url = Uri.parse(
+        '$_baseUrl/weather?q=$city&appid=$_apiKey&units=metric&lang=$lang',
+      );
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        _weather = Weather.fromJson(jsonData);
+        _isLoading = false;
+      } else {
+        _weather = null;
+        _errorMessage = 'Veri alınamadı (${response.statusCode})';
+        _isLoading = false;
+      }
     } catch (e) {
-      _errorMessage = "Veri alınırken bir hata oluştu: ${e.toString()}";
-    } finally {
+      _weather = null;
+      _errorMessage = 'Bir hata oluştu: $e';
       _isLoading = false;
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   Future<WeatherData> fetchWeatherData(String cityName) async {
-    // Bu, tek seferlik veriyi getirir ama provider durumunu etkilemez
     final response = await http.get(
       Uri.parse('$_baseUrl/weather?q=$cityName&appid=$_apiKey&units=metric'),
     );

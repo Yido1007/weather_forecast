@@ -46,7 +46,9 @@ class WeeklyWeatherWidget extends StatelessWidget {
                     SizedBox(
                       width: 95,
                       child: Text(
-                        "${["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"][day.date.weekday % 7]}",
+                        DateFormat.EEEE(
+                          context.locale.languageCode,
+                        ).format(day.date),
                         style: textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,

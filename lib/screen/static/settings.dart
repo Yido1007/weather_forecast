@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/core/startup.dart';
 import '../../provider/theme.dart';
 
@@ -42,12 +43,30 @@ class SettingsScreen extends StatelessWidget {
               },
               child: const Text("Onboarding Sıfırla"),
             ),
+
             ElevatedButton(
-              onPressed: () => context.setLocale(const Locale('en')),
+              onPressed: () async {
+                await context.setLocale(const Locale('en'));
+                final weatherProvider = Provider.of<WeatherProvider>(
+                  context,
+                  listen: false,
+                );
+                final currentCity = weatherProvider.weather?.cityName ?? "";
+                await weatherProvider.fetchWeather(currentCity, context);
+              },
+
               child: const Text("English"),
             ),
             ElevatedButton(
-              onPressed: () => context.setLocale(const Locale('tr')),
+              onPressed: () async {
+                await context.setLocale(const Locale('tr'));
+                final weatherProvider = Provider.of<WeatherProvider>(
+                  context,
+                  listen: false,
+                );
+                final currentCity = weatherProvider.weather?.cityName ?? "";
+                await weatherProvider.fetchWeather(currentCity, context);
+              },
               child: const Text("Türkçe"),
             ),
           ],

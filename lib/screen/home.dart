@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final lastCity = await weatherProvider.loadLastSearchedCity();
       if (lastCity != null && lastCity.isNotEmpty) {
         _cityController.text = lastCity;
-        await weatherProvider.fetchWeather(lastCity);
+        await weatherProvider.fetchWeather(lastCity, context);
         final lat = weatherProvider.weather?.lat;
         final lon = weatherProvider.weather?.lon;
         if (lat != null && lon != null) {
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     final city = _cityController.text.trim();
     if (city.isNotEmpty) {
-      await weatherProvider.fetchWeather(city);
+      await weatherProvider.fetchWeather(city, context);
       final lat = weatherProvider.weather?.lat;
       final lon = weatherProvider.weather?.lon;
       if (lat != null && lon != null) {
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: AppDrawer(
         onCitySelected: (city) async {
           _cityController.text = city;
-          await weatherProvider.fetchWeather(city);
+          await weatherProvider.fetchWeather(city, context);
           final lat = weatherProvider.weather?.lat;
           final lon = weatherProvider.weather?.lon;
           if (lat != null && lon != null) {
