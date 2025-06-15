@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_forecast/screen/home.dart';
 
 class BoardingScreen extends StatefulWidget {
   const BoardingScreen({super.key});
@@ -31,6 +33,17 @@ class _BoardingScreenState extends State<BoardingScreen> {
     ),
   ];
 
+  Future<void> _finishBoarding() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('boarding_shown', true);
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+    }
+  }
+
   void _nextPage() {
     if (_pageIndex < _pages.length - 1) {
       _controller.nextPage(
@@ -38,7 +51,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
         curve: Curves.easeIn,
       );
     } else {
-      Navigator.pushReplacementNamed(context, '/');
+      _finishBoarding();
     }
   }
 

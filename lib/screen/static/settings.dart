@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_forecast/screen/core/startup.dart';
 import '../../provider/theme.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -12,15 +14,32 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Ayarlar")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            const Text("Karanlık Mod", style: TextStyle(fontSize: 18)),
-            Switch(
-              value: themeProvider.isDarkMode,
-              onChanged: (value) {
-                themeProvider.toggleTheme();
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Karanlık Mod", style: TextStyle(fontSize: 18)),
+                Switch(
+                  value: themeProvider.isDarkMode,
+                  onChanged: (value) {
+                    themeProvider.toggleTheme();
+                  },
+                ),
+              ],
+            ),
+            // hafıza sıfırlamak için kaldırılcak !!
+            ElevatedButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.remove('boarding_shown');
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const StartupRouter()),
+                  (route) => false,
+                );
               },
+              child: const Text("Onboarding Sıfırla"),
             ),
           ],
         ),
