@@ -1,7 +1,9 @@
+import 'dart:io' show Platform;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 
 import 'package:weather_forecast/screen/core/boarding.dart';
@@ -13,10 +15,23 @@ import 'provider/favorite.dart';
 import 'provider/theme.dart';
 import 'provider/weather.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await EasyLocalization.ensureInitialized();
+
+  // Bildirimleri sadece mobilde başlat
+  if (Platform.isAndroid || Platform.isIOS) {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
 
   runApp(
     EasyLocalization(
@@ -29,7 +44,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => WeatherProvider()),
           ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ],
-        child: MyApp(), // DİKKAT: const YOK!
+        child: MyApp(),
       ),
     ),
   );

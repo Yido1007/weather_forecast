@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/model/hourly_weather.dart';
+import 'package:weather_forecast/service/notification.dart';
 
 import '../model/daily_weather.dart';
 import '../model/weather.dart';
@@ -29,18 +31,6 @@ class WeatherProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  Future<void> saveLastSearchedCity(String city) async {
-    _lastSearchedCity = city;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('last_city', city);
-  }
-
-  Future<String?> loadLastSearchedCity() async {
-    final prefs = await SharedPreferences.getInstance();
-    _lastSearchedCity = prefs.getString('last_city');
-    return _lastSearchedCity;
-  }
-
   Future<void> fetchWeather(String city, BuildContext context) async {
     _isLoading = true;
     _errorMessage = null;
@@ -58,6 +48,7 @@ class WeatherProvider with ChangeNotifier {
         final jsonData = json.decode(response.body);
         _weather = Weather.fromJson(jsonData);
         _isLoading = false;
+        checkSevereWeather(_weather!);
       } else {
         _weather = null;
         _errorMessage = 'Veri alınamadı (${response.statusCode})';
@@ -68,7 +59,50 @@ class WeatherProvider with ChangeNotifier {
       _errorMessage = 'Bir hata oluştu: $e';
       _isLoading = false;
     }
+
     notifyListeners();
+  }
+
+  Future<void> saveLastSearchedCity(String city) async {
+    _lastSearchedCity = city;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('last_city', city);
+  }
+
+  Future<String?> loadLastSearchedCity() async {
+    final prefs = await SharedPreferences.getInstance();
+    _lastSearchedCity = prefs.getString('last_city');
+    return _lastSearchedCity;
+  }
+
+  void checkSevereWeather(Weather weather) {
+    if (!(Platform.isAndroid || Platform.isIOS)) return;
+
+    if (weather.temperature > 38) {
+      showWeatherNotification(
+        "Aşırı Sıcaklık Uyarısı",
+        "${weather.cityName} için sıcaklık ${weather.temperature.toStringAsFixed(1)}°C'nin üzerinde!",
+      );
+    }
+    if (weather.temperature < 0) {
+      showWeatherNotification(
+        "Aşırı Soğuk Uyarısı",
+        "${weather.cityName} için sıcaklık 0°C'nin altında!",
+      );
+    }
+    if (weather.windSpeed > 15) {
+      showWeatherNotification(
+        "Fırtına Uyarısı",
+        "${weather.cityName} için rüzgar hızı çok yüksek (${weather.windSpeed} m/s)!",
+      );
+    }
+    if (weather.description.contains("fırtına") ||
+        weather.description.toLowerCase().contains("storm")) {
+      showWeatherNotification(
+        "Fırtına Uyarısı",
+        "${weather.cityName} için fırtına bekleniyor!",
+      );
+    }
   }
 
   Future<WeatherData> fetchWeatherData(String cityName) async {
