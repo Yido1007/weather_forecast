@@ -1,5 +1,6 @@
 // import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather_forecast/screen/client/locations.dart';
 import 'package:weather_forecast/screen/static/settings.dart';
 import 'package:weather_forecast/widget/drawer/drawer_item.dart';
@@ -13,6 +14,7 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
+          SvgPicture.asset("assets/svg/icon.svg"),
           //Favorite Cities
           DrawerItem(
             icon: Icons.star,
