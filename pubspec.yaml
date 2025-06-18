@@ -20,6 +20,8 @@ dependencies:
   easy_localization: ^3.0.7+1
   flutter_local_notifications: ^19.2.1
   flutter_svg: ^2.2.0
+  geolocator: ^14.0.1
+  geocoding: ^4.0.0
 
 dev_dependencies:
   flutter_test:

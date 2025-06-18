@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/model/hourly_weather.dart';
+import 'package:weather_forecast/service/location.dart';
 import 'package:weather_forecast/service/notification.dart';
 
 import '../model/daily_weather.dart';
@@ -25,6 +27,11 @@ class WeatherProvider with ChangeNotifier {
   String? _errorMessage;
   String? _lastSearchedCity;
   String? get lastSearchedCity => _lastSearchedCity;
+  bool _useCurrentLocation = false;
+  bool get useCurrentLocation => _useCurrentLocation;
+
+  String? _currentLocationName;
+  String? get currentLocationName => _currentLocationName;
 
   Weather? get weather => _weather;
   List<HourlyWeather> get hourlyWeather => _hourlyWeather;
@@ -61,6 +68,82 @@ class WeatherProvider with ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future<String?> getCityNameFromCoordinates(double lat, double lon) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
+    if (placemarks.isNotEmpty) {
+      return placemarks.first.locality;
+    }
+    return null;
+  }
+
+  Future<void> fetchWeatherByLocation(
+    double lat,
+    double lon,
+    String lang,
+  ) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final url = Uri.parse(
+      'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$_apiKey&units=metric&lang=$lang',
+    );
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        _weather = Weather.fromJson(jsonData);
+        _isLoading = false;
+        notifyListeners();
+      } else {
+        _isLoading = false;
+        _errorMessage = "Veri alınamadı: ${response.statusCode}";
+        notifyListeners();
+      }
+    } catch (e) {
+      _isLoading = false;
+      _errorMessage = "Hata: $e";
+      notifyListeners();
+    }
+  }
+
+  Future<void> loadLocationPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    _useCurrentLocation = prefs.getBool('use_current_location') ?? false;
+    notifyListeners();
+    // Eğer açık ise konumdan veri çek
+    if (_useCurrentLocation) {
+      await setUseCurrentLocation(true, fromStartup: true);
+    }
+  }
+
+  Future<void> setUseCurrentLocation(
+    bool value, {
+    bool fromStartup = false,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    _useCurrentLocation = value;
+    await prefs.setBool('use_current_location', value);
+    notifyListeners();
+    if (value) {
+      final pos = await getCurrentLocation();
+      if (pos != null) {
+        _currentLocationName = await getCityNameFromCoordinates(
+          pos.latitude,
+          pos.longitude,
+        );
+        await fetchWeatherByLocation(pos.latitude, pos.longitude, "tr");
+        await fetchHourlyWeather(pos.latitude, pos.longitude);
+        await fetchWeeklyWeather(pos.latitude, pos.longitude);
+      } else {
+        _currentLocationName = "Konum alınamadı";
+      }
+      notifyListeners();
+    } else if (!fromStartup) {
+    }
   }
 
   Future<void> saveLastSearchedCity(String city) async {
