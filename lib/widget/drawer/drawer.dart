@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/client/locations.dart';
@@ -12,9 +13,7 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // listen: true olmalı!
     final weatherProvider = Provider.of<WeatherProvider>(context);
-
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,16 +40,30 @@ class AppDrawer extends StatelessWidget {
           // Konum adı metni
           if (weatherProvider.useCurrentLocation)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Text(
-                weatherProvider.currentLocationName ?? "Konum alınıyor...",
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
+              padding: const EdgeInsets.only(bottom: 6.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    size: 16,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: Text(
+                      weatherProvider.detailedLocationName ?? "Konum alınamadı",
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
             ),
-          const SizedBox(height: 10),
+          const Gap(10),
           // Favorite Cities
           DrawerItem(
             icon: Icons.star,

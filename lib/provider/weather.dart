@@ -29,6 +29,8 @@ class WeatherProvider with ChangeNotifier {
   String? get lastSearchedCity => _lastSearchedCity;
   bool _useCurrentLocation = false;
   bool get useCurrentLocation => _useCurrentLocation;
+  String? _detailedLocationName;
+  String? get detailedLocationName => _detailedLocationName;
 
   String? _currentLocationName;
   String? get currentLocationName => _currentLocationName;
@@ -110,6 +112,19 @@ class WeatherProvider with ChangeNotifier {
     }
   }
 
+  Future<String> getDetailedAddress(double lat, double lon) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
+      if (placemarks.isNotEmpty) {
+        final place = placemarks.first;
+        return "${place.country}/${place.administrativeArea}/${place.locality ?? place.subLocality ?? ''}";
+      }
+      return "Konum bulunamadı";
+    } catch (e) {
+      return "Konum bulunamadı";
+    }
+  }
+
   Future<void> loadLocationPreference() async {
     final prefs = await SharedPreferences.getInstance();
     _useCurrentLocation = prefs.getBool('use_current_location') ?? false;
@@ -138,6 +153,14 @@ class WeatherProvider with ChangeNotifier {
         await fetchWeatherByLocation(pos.latitude, pos.longitude, "tr");
         await fetchHourlyWeather(pos.latitude, pos.longitude);
         await fetchWeeklyWeather(pos.latitude, pos.longitude);
+        _currentLocationName = await getCityNameFromCoordinates(
+          pos.latitude,
+          pos.longitude,
+        );
+        _detailedLocationName = await getDetailedAddress(
+          pos.latitude,
+          pos.longitude,
+        );
       } else {
         _currentLocationName = "Konum alınamadı";
       }
