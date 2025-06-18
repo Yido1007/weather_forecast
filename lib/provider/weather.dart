@@ -142,8 +142,7 @@ class WeatherProvider with ChangeNotifier {
         _currentLocationName = "Konum alınamadı";
       }
       notifyListeners();
-    } else if (!fromStartup) {
-    }
+    } else if (!fromStartup) {}
   }
 
   Future<void> saveLastSearchedCity(String city) async {
@@ -221,7 +220,7 @@ class WeatherProvider with ChangeNotifier {
 
   Future<void> fetchWeeklyWeather(double lat, double lon) async {
     final url = Uri.parse(
-      '$_oneCall/onecall?lat=41.0082&lon=28.9784&appid=$_apiKey&units=metric',
+      '$_oneCall/onecall?lat=$lat&lon=$lon&appid=$_apiKey&units=metric',
     );
     final response = await http.get(url);
     if (response.statusCode == 200) {
