@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/client/locations.dart';
 import 'package:weather_forecast/screen/client/map.dart';
+import 'package:weather_forecast/screen/client/news.dart';
 import 'package:weather_forecast/screen/static/settings.dart';
 import 'package:weather_forecast/widget/drawer/drawer_item.dart';
 
@@ -22,7 +23,7 @@ class AppDrawer extends StatelessWidget {
           SvgPicture.asset("assets/svg/icon.svg"),
           // Switch bölümü
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               children: [
                 const Icon(Icons.my_location, size: 22),
@@ -50,7 +51,7 @@ class AppDrawer extends StatelessWidget {
                     size: 16,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  const SizedBox(width: 4),
+                  const Gap(4),
                   Flexible(
                     child: Text(
                       weatherProvider.detailedLocationName ?? "Konum alınamadı",
@@ -64,7 +65,7 @@ class AppDrawer extends StatelessWidget {
                 ],
               ),
             ),
-
+          //Maps
           DrawerItem(
             icon: Icons.map_rounded,
             title: "Haritalar",
@@ -76,7 +77,6 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
-          const Gap(10),
           // Favorite Cities
           DrawerItem(
             icon: Icons.star,
@@ -97,6 +97,19 @@ class AppDrawer extends StatelessWidget {
                 onCitySelected(selectedCity);
                 Navigator.of(context).pop();
               }
+            },
+          ),
+          DrawerItem(
+            icon: Icons.newspaper_rounded,
+            title: "Haberler",
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WeatherNewsScreen(),
+                ),
+              );
             },
           ),
           // Settings
