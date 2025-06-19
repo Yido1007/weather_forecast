@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/client/locations.dart';
+import 'package:weather_forecast/screen/client/map.dart';
 import 'package:weather_forecast/screen/static/settings.dart';
 import 'package:weather_forecast/widget/drawer/drawer_item.dart';
 
@@ -63,6 +64,18 @@ class AppDrawer extends StatelessWidget {
                 ],
               ),
             ),
+
+          DrawerItem(
+            icon: Icons.map_rounded,
+            title: "Haritalar",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const WeatherRadarScreen()),
+              );
+            },
+          ),
+
           const Gap(10),
           // Favorite Cities
           DrawerItem(
