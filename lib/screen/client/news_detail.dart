@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -15,7 +16,7 @@ class NewsDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          article['title'] ?? 'Haber Detayı',
+          article['title'] ?? 'news-detail'.tr(),
           style: const TextStyle(fontSize: 16),
         ),
       ),

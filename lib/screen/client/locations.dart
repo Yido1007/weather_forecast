@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/favorite.dart';
@@ -10,7 +11,7 @@ class FavoriteLocations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Favori Şehirler'), centerTitle: true),
+      appBar: AppBar(title: Text('fav-location').tr(), centerTitle: true),
       body: Consumer<FavoriteProvider>(
         builder: (context, favoriteProvider, _) {
           final favorites = favoriteProvider.favorites;

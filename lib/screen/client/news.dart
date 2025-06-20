@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -76,7 +77,7 @@ class _WeatherNewsScreenState extends State<WeatherNewsScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Hava Durumu Haberleri')),
+      appBar: AppBar(title: Text('weather-news'.tr())),
       body:
           _isLoading
               ? const Center(child: CircularProgressIndicator())

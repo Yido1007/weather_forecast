@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -20,17 +21,14 @@ class _WeatherRadarScreenState extends State<WeatherRadarScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> layers = [
-      {'key': 'clouds_new', 'label': 'Bulut'},
-      {'key': 'precipitation_new', 'label': 'Yağış'},
-      {'key': 'temp_new', 'label': 'Sıcaklık'},
-      {'key': 'wind_new', 'label': 'Rüzgar'},
+      {'key': 'clouds_new', 'label': 'cloud'.tr()},
+      {'key': 'precipitation_new', 'label': 'precipitation'.tr()},
+      {'key': 'temp_new', 'label': 'temperature'.tr()},
+      {'key': 'wind_new', 'label': 'wind'.tr()},
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Radar & Canlı Harita'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('maps'.tr()), centerTitle: true),
       body: Column(
         children: [
           Padding(

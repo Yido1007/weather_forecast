@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -21,14 +22,13 @@ class AppDrawer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.asset("assets/svg/icon.svg"),
-          // Switch bölümü
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               children: [
                 const Icon(Icons.my_location, size: 22),
-                const SizedBox(width: 12),
-                const Text("Mevcut Konumu Kullan"),
+                const Gap(12),
+                Text("current-location").tr(),
                 const Spacer(),
                 Switch(
                   value: weatherProvider.useCurrentLocation,
@@ -39,7 +39,7 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           ),
-          // Konum adı metni
+          // Location text
           if (weatherProvider.useCurrentLocation)
             Padding(
               padding: const EdgeInsets.only(bottom: 6.0),
@@ -54,7 +54,8 @@ class AppDrawer extends StatelessWidget {
                   const Gap(4),
                   Flexible(
                     child: Text(
-                      weatherProvider.detailedLocationName ?? "Konum alınamadı",
+                      weatherProvider.detailedLocationName ??
+                          "not-location".tr(),
                       style: TextStyle(
                         fontSize: 13,
                         color: Theme.of(context).colorScheme.primary,
@@ -68,7 +69,7 @@ class AppDrawer extends StatelessWidget {
           //Maps
           DrawerItem(
             icon: Icons.map_rounded,
-            title: "Haritalar",
+            title: "maps".tr(),
             onTap: () {
               Navigator.push(
                 context,
@@ -76,11 +77,10 @@ class AppDrawer extends StatelessWidget {
               );
             },
           ),
-
           // Favorite Cities
           DrawerItem(
             icon: Icons.star,
-            title: "Favori Şehirler",
+            title: "fav-location".tr(),
             onTap: () async {
               final selectedCity = await Navigator.push<String>(
                 context,
@@ -99,9 +99,10 @@ class AppDrawer extends StatelessWidget {
               }
             },
           ),
+          //News
           DrawerItem(
             icon: Icons.newspaper_rounded,
-            title: "Haberler",
+            title: "news".tr(),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -115,7 +116,7 @@ class AppDrawer extends StatelessWidget {
           // Settings
           DrawerItem(
             icon: Icons.settings,
-            title: "Ayarlar",
+            title: "settings".tr(),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(

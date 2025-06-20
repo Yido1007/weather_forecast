@@ -29,5 +29,17 @@
     "boarding-title-2": "Favori Şehirler",
     "boarding-text-2": "Sık baktığınız şehirleri favorilerinize ekleyin.",
     "boarding-title-3": "Kolay ve Hızlı",
-    "boarding-text-3": "Modern tasarım ve sade kullanım deneyimi."
+    "boarding-text-3": "Modern tasarım ve sade kullanım deneyimi.",
+    "current-location": "Mevcut Konumu Kullan",
+    "maps": "Harita/Radar",
+    "fav-location": "Favori Konumlarım",
+    "news": "Haberler",
+    "cloud": "Bulut",
+    "precipitation": "Yağış",
+    "temperature": "Sıcaklık",
+    "weather-news": "Hava Durumu Haberleri",
+    "not-location": "Konum Bulunamadı",
+    "no-news": "Haber Bulunamadı",
+    "news-detail": "Haber Detayı"
+    
 }

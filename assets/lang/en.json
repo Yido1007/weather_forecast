@@ -29,5 +29,16 @@
     "boarding-title-2": "Favorites Cities",
     "boarding-text-2": "Add the cities you look at often to your favorites.",
     "boarding-title-3": "Easy and Fast",
-    "boarding-text-3": "Modern design and simple operation experience."
+    "boarding-text-3": "Modern design and simple operation experience.",
+    "current-location": "Use Current Location",
+    "maps": "Map/Radar",
+    "fav-location": "Favorite Locations",
+    "news": "News",
+    "cloud": "Cloud",
+    "precipitation": "Precipitation",
+    "temperature": "Temperature",
+    "weather-news": "Weather Forecast News",
+    "not-location": "The location could not be found.",
+    "no-news": "No news found",
+    "news-detail": "News Detail"
 }
