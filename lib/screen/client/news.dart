@@ -33,12 +33,12 @@ class _WeatherNewsScreenState extends State<WeatherNewsScreen> {
   };
 
   Future<void> fetchWeatherNews(String langCode) async {
-    final String apiKey = dotenv.env['OPENWEATHER_API_KEY']!;
+    final String apiKey = dotenv.env['NEWSAPI_API_KEY']!;
 
-    final current = newsQueries[langCode] ?? newsQueries['en'];
+    final current = newsQueries[langCode] ?? newsQueries['en']!;
 
     final url = Uri.parse(
-      'https://newsapi.org/v2/everything?q=${current!['query']}&language=${current['language']}&sortBy=publishedAt&apiKey=$apiKey',
+      'https://newsapi.org/v2/everything?q=${current['query']}&language=${current['language']}&sortBy=publishedAt&apiKey=$apiKey',
     );
 
     final response = await http.get(url);
@@ -78,25 +78,58 @@ class _WeatherNewsScreenState extends State<WeatherNewsScreen> {
       body:
           _isLoading
               ? const Center(child: CircularProgressIndicator())
+              : _articles.isEmpty
+              ? const Center(child: Text("Haber yok"))
               : ListView.separated(
                 itemCount: _articles.length,
-                separatorBuilder: (_, __) => const Divider(),
+                separatorBuilder: (_, __) => const Divider(height: 24),
                 itemBuilder: (context, index) {
                   final article = _articles[index];
-                  return ListTile(
-                    leading:
-                        article['urlToImage'] != null
-                            ? Image.network(
-                              article['urlToImage'],
-                              width: 60,
-                              fit: BoxFit.cover,
-                            )
-                            : null,
-                    title: Text(article['title'] ?? ''),
-                    subtitle: Text(article['description'] ?? ''),
+                  return GestureDetector(
                     onTap: () {
                       if (article['url'] != null) {}
                     },
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (article['urlToImage'] != null)
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  article['urlToImage'],
+                                  width: double.infinity,
+                                  height: 180,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            const SizedBox(height: 10),
+                            Text(
+                              article['title'] ?? '',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              article['description'] ?? '',
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
