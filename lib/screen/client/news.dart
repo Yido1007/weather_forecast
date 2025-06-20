@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:weather_forecast/screen/client/news_detail.dart';
+
 class WeatherNewsScreen extends StatefulWidget {
   const WeatherNewsScreen({super.key});
 
@@ -87,8 +89,15 @@ class _WeatherNewsScreenState extends State<WeatherNewsScreen> {
                   final article = _articles[index];
                   return GestureDetector(
                     onTap: () {
-                      if (article['url'] != null) {}
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => NewsDetailPage(article: article),
+                        ),
+                      );
                     },
+
                     child: Card(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 12,
