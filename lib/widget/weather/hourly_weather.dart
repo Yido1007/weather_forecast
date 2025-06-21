@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/service/lottie_func.dart';
-import 'package:weather_forecast/service/temperature.dart';
+import 'package:weather_forecast/service/units/temperature.dart';
 import '../../provider/weather.dart';
 
 class HourlyWeatherWidget extends StatelessWidget {

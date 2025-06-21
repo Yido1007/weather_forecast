@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/favorite.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/provider/weather.dart';
-import 'package:weather_forecast/service/temperature.dart';
+import 'package:weather_forecast/service/units/temperature.dart';
 
 class FavoriteLocations extends StatelessWidget {
   final Function(String) onCitySelected;

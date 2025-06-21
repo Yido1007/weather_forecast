@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
+import 'package:weather_forecast/service/units/pressure.dart';
 import '../../model/weather.dart';
 import '../../provider/favorite.dart';
 import '../../service/lottie_func.dart';
-import '../../service/temperature.dart';
+import '../../service/units/temperature.dart';
 import 'info_item.dart';
 
 class WeatherInfo extends StatelessWidget {
@@ -24,6 +26,14 @@ class WeatherInfo extends StatelessWidget {
     final unit = unitProvider.unit;
     final double temp = convertTemperature(weather.temperature, unit);
     final String unitSymbolText = unitSymbol(unit);
+    final pressureUnitProvider = Provider.of<PressureUnitProvider>(context);
+    final pressureUnit =
+        pressureUnitProvider.pressureUnit; // getter adı sende pressureUnit
+    final double convertedPressure = convertPressure(
+      weather.pressure.toDouble(),
+      pressureUnit,
+    );
+    final String unitText = pressureUnitSymbol(pressureUnit);
 
     return Card(
       color: colorScheme.surface,
@@ -116,7 +126,8 @@ class WeatherInfo extends StatelessWidget {
                       InfoItem(
                         icon: Icons.compress,
                         label: "pressure".tr(),
-                        value: "${weather.pressure} hPa",
+                        value:
+                            "${convertedPressure.toStringAsFixed(1)} $unitText",
                         color: colorScheme.secondary,
                         textTheme: textTheme,
                       ),

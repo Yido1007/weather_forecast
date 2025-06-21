@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
-import 'package:weather_forecast/service/temperature.dart';
+import 'package:weather_forecast/service/units/temperature.dart';
 
 import '../../provider/weather.dart';
 import '../../service/lottie_func.dart';

@@ -3,19 +3,87 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/core/startup.dart';
 import 'package:weather_forecast/provider/theme.dart';
-import 'package:weather_forecast/service/temperature.dart';
+import 'package:weather_forecast/service/units/pressure.dart';
+import 'package:weather_forecast/service/units/temperature.dart';
 
 class SettingsScreen extends StatelessWidget {
+  void showPressureUnitDialog(BuildContext context) {
+    final unitProvider = Provider.of<PressureUnitProvider>(
+      context,
+      listen: false,
+    );
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Basınç Birimi Seç'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<PressureUnit>(
+                title: const Text('hPa (Hektopascal)'),
+                value: PressureUnit.hpa,
+                groupValue: unitProvider.pressureUnit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setPressureUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              RadioListTile<PressureUnit>(
+                title: const Text('mmHg (Milimetre Cıva)'),
+                value: PressureUnit.mmhg,
+                groupValue: unitProvider.pressureUnit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setPressureUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              RadioListTile<PressureUnit>(
+                title: const Text('atm (Atmosfer)'),
+                value: PressureUnit.atm,
+                groupValue: unitProvider.pressureUnit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setPressureUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              RadioListTile<PressureUnit>(
+                title: const Text('psi'),
+                value: PressureUnit.psi,
+                groupValue: unitProvider.pressureUnit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setPressureUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final unitProvider = Provider.of<TemperatureUnitProvider>(context);
+    final unit = Provider.of<PressureUnitProvider>(context).pressureUnit;
+    final unitName = pressureUnitFullName(unit);
     return Scaffold(
       appBar: AppBar(title: Text('settings'.tr())),
       body: Padding(
@@ -69,6 +137,43 @@ class SettingsScreen extends StatelessWidget {
                       ],
                 ),
               ],
+            ),
+            //Pressure unit
+            InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () => showPressureUnitDialog(context),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 14,
+                  horizontal: 6,
+                ),
+                child: Row(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.speed, color: Colors.blueAccent),
+                        const Gap(15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Basınç Birimi",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              unitName,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
             // Onboarding Reset
             ElevatedButton(

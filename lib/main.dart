@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
 
 import 'package:weather_forecast/screen/core/boarding.dart';
@@ -45,6 +46,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => WeatherProvider()),
           ChangeNotifierProvider(create: (_) => FavoriteProvider()),
           ChangeNotifierProvider(create: (_) => TemperatureUnitProvider()),
+          ChangeNotifierProvider(create: (_) => PressureUnitProvider()),
         ],
         child: MyApp(),
       ),
