@@ -5,11 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
+import 'package:weather_forecast/provider/units/wind.dart';
 import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/core/startup.dart';
 import 'package:weather_forecast/provider/theme.dart';
 import 'package:weather_forecast/service/units/pressure.dart';
 import 'package:weather_forecast/service/units/temperature.dart';
+import 'package:weather_forecast/service/units/wind.dart';
 import 'package:weather_forecast/widget/unit_selector.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -130,6 +132,59 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  void showWindSpeedUnitDialog(BuildContext context) {
+    final unitProvider = Provider.of<WindSpeedUnitProvider>(
+      context,
+      listen: false,
+    );
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Rüzgar Hızı Birimi Seç'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<WindSpeedUnit>(
+                title: const Text('Kilometre/Saat (km/s)'),
+                value: WindSpeedUnit.kmh,
+                groupValue: unitProvider.windSpeedUnit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setWindSpeedUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              RadioListTile<WindSpeedUnit>(
+                title: const Text('Metre/Saniye (m/s)'),
+                value: WindSpeedUnit.ms,
+                groupValue: unitProvider.windSpeedUnit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setWindSpeedUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              RadioListTile<WindSpeedUnit>(
+                title: const Text('Mil/Saat (mph)'),
+                value: WindSpeedUnit.mph,
+                groupValue: unitProvider.windSpeedUnit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setWindSpeedUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   const SettingsScreen({super.key});
 
   @override
@@ -144,6 +199,10 @@ class SettingsScreen extends StatelessWidget {
     final pressureUnitProvider = Provider.of<PressureUnitProvider>(context);
     final pressureUnit = pressureUnitProvider.pressureUnit;
     final pressureUnitName = pressureUnitFullName(pressureUnit);
+    //wind provider
+    final windSpeedProvider = Provider.of<WindSpeedUnitProvider>(context);
+    final windSpeedUnit = windSpeedProvider.windSpeedUnit;
+    final windSpeedUnitName = windSpeedUnitFullName(windSpeedUnit);
     return Scaffold(
       appBar: AppBar(title: Text('settings'.tr())),
       body: Padding(
@@ -180,6 +239,14 @@ class SettingsScreen extends StatelessWidget {
               title: "Basınç Birimi",
               subtitle: pressureUnitName,
               onTap: () => showPressureUnitDialog(context),
+            ),
+            //Wind unit
+            SettingUnitRow(
+              icon: Icons.air,
+              iconColor: Colors.green.shade400,
+              title: "Rüzgar Hızı Birimi",
+              subtitle: windSpeedUnitName,
+              onTap: () => showWindSpeedUnitDialog(context),
             ),
             // Onboarding Reset
             ElevatedButton(

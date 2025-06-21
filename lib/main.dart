@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
+import 'package:weather_forecast/provider/units/wind.dart';
 
 import 'package:weather_forecast/screen/core/boarding.dart';
 import 'package:weather_forecast/screen/core/startup.dart';
@@ -47,6 +48,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => FavoriteProvider()),
           ChangeNotifierProvider(create: (_) => TemperatureUnitProvider()),
           ChangeNotifierProvider(create: (_) => PressureUnitProvider()),
+          ChangeNotifierProvider(create: (_) => WindSpeedUnitProvider()),
         ],
         child: MyApp(),
       ),

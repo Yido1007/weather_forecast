@@ -5,7 +5,9 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
+import 'package:weather_forecast/provider/units/wind.dart';
 import 'package:weather_forecast/service/units/pressure.dart';
+import 'package:weather_forecast/service/units/wind.dart';
 import '../../model/weather.dart';
 import '../../provider/favorite.dart';
 import '../../service/lottie_func.dart';
@@ -34,6 +36,10 @@ class WeatherInfo extends StatelessWidget {
       pressureUnit,
     );
     final String unitText = pressureUnitSymbol(pressureUnit);
+    final windSpeedProvider = Provider.of<WindSpeedUnitProvider>(context);
+    final windSpeedUnit = windSpeedProvider.windSpeedUnit;
+    final double windSpeed = convertWindSpeed(weather.windSpeed, windSpeedUnit);
+    final String windSpeedSymbol = windSpeedUnitSymbol(windSpeedUnit);
 
     return Card(
       color: colorScheme.surface,
@@ -119,7 +125,8 @@ class WeatherInfo extends StatelessWidget {
                       InfoItem(
                         icon: Icons.air,
                         label: "wind".tr(),
-                        value: "${weather.windSpeed} m/s",
+                        value:
+                            '${windSpeed.toStringAsFixed(1)} $windSpeedSymbol',
                         color: colorScheme.secondary,
                         textTheme: textTheme,
                       ),
