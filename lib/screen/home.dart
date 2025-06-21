@@ -136,7 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (weatherProvider.weather != null) ...[
                   WeatherInfo(weather: weatherProvider.weather!),
                   const Gap(10),
-                  SizedBox(height: 220, child: HourlyWeatherWidget()),
+                  SizedBox(
+                    height: 220,
+                    child: HourlyWeatherWidget(
+                    ),
+                  ),
                   const Gap(10),
                   WeeklyWeatherWidget(),
                 ],

@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/favorite.dart';
+import 'package:weather_forecast/provider/temperature.dart';
 import 'package:weather_forecast/provider/weather.dart';
+import 'package:weather_forecast/service/temperature.dart';
 
 class FavoriteLocations extends StatelessWidget {
   final Function(String) onCitySelected;
@@ -10,6 +12,11 @@ class FavoriteLocations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final unitProvider = Provider.of<TemperatureUnitProvider>(context);
+    final unit = unitProvider.unit;
+    final unitText = unitSymbol(unit);
+
     return Scaffold(
       appBar: AppBar(title: Text('fav-location').tr(), centerTitle: true),
       body: Consumer<FavoriteProvider>(
@@ -27,7 +34,7 @@ class FavoriteLocations extends StatelessWidget {
                     background: Container(
                       color: Theme.of(context).colorScheme.error,
                       alignment: Alignment.centerRight,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Icon(
                         Icons.delete,
                         color: Theme.of(context).colorScheme.onError,
@@ -47,6 +54,15 @@ class FavoriteLocations extends StatelessWidget {
                           iconUrl = weather.iconUrl;
                           temperature = weather.temperature;
                         }
+                        String? tempText;
+                        if (temperature != null) {
+                          final convertedTemp = convertTemperature(
+                            temperature,
+                            unit,
+                          );
+                          tempText = '${convertedTemp.round()}$unitText';
+                        }
+
                         return ListTile(
                           leading:
                               iconUrl != null
@@ -55,12 +71,9 @@ class FavoriteLocations extends StatelessWidget {
                                     width: 40,
                                     height: 40,
                                   )
-                                  : Icon(Icons.update),
+                                  : const Icon(Icons.update),
                           title: Text(city),
-                          subtitle:
-                              temperature != null
-                                  ? Text('${temperature.round()}°C')
-                                  : null,
+                          subtitle: tempText != null ? Text(tempText) : null,
                           onTap: () => onCitySelected(city),
                         );
                       },

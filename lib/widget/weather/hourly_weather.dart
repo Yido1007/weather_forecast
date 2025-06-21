@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_forecast/provider/temperature.dart';
 import 'package:weather_forecast/service/lottie_func.dart';
+import 'package:weather_forecast/service/temperature.dart';
 import '../../provider/weather.dart';
 
 class HourlyWeatherWidget extends StatelessWidget {
@@ -13,6 +15,11 @@ class HourlyWeatherWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final hourlyWeather = Provider.of<WeatherProvider>(context).hourlyWeather;
+
+    // Birim Provider'dan alınır
+    final unitProvider = Provider.of<TemperatureUnitProvider>(context);
+    final unit = unitProvider.unit;
+    final unitText = unitSymbol(unit);
 
     if (hourlyWeather.isEmpty) {
       return Center(
@@ -52,6 +59,7 @@ class HourlyWeatherWidget extends StatelessWidget {
                     filteredHourly.length > 12 ? 12 : filteredHourly.length,
                 itemBuilder: (ctx, i) {
                   final weather = filteredHourly[i];
+                  final temp = convertTemperature(weather.temperature, unit);
                   return Container(
                     width: 80,
                     margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -77,9 +85,8 @@ class HourlyWeatherWidget extends StatelessWidget {
                             fit: BoxFit.contain,
                           ),
                         ),
-
                         Text(
-                          '${weather.temperature.toStringAsFixed(1)}°C',
+                          '${temp.toStringAsFixed(1)}$unitText',
                           style: textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.secondary,

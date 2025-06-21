@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
+import 'package:weather_forecast/provider/temperature.dart';
+import 'package:weather_forecast/service/temperature.dart';
+
 import '../../provider/weather.dart';
 import '../../service/lottie_func.dart';
 
@@ -14,6 +17,9 @@ class WeeklyWeatherWidget extends StatelessWidget {
     final weeklyWeather = Provider.of<WeatherProvider>(context).weeklyWeather;
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final unitProvider = Provider.of<TemperatureUnitProvider>(context);
+    final unit = unitProvider.unit;
+    final unitText = unitSymbol(unit);
 
     if (weeklyWeather.isEmpty) {
       return Text(
@@ -39,6 +45,9 @@ class WeeklyWeatherWidget extends StatelessWidget {
             ),
             const Divider(thickness: 1),
             ...weeklyWeather.map((day) {
+              // GÜNLÜK SICAKLIKLARI BİRİME ÇEVİR
+              final maxTemp = convertTemperature(day.maxTemp, unit);
+              final minTemp = convertTemperature(day.minTemp, unit);
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
@@ -72,7 +81,7 @@ class WeeklyWeatherWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "↑ ${day.maxTemp.toStringAsFixed(1)}°",
+                            "↑ ${maxTemp.toStringAsFixed(1)}$unitText",
                             style: textTheme.bodyMedium?.copyWith(
                               color: colorScheme.error,
                               fontWeight: FontWeight.w500,
@@ -80,7 +89,7 @@ class WeeklyWeatherWidget extends StatelessWidget {
                           ),
                           Gap(16),
                           Text(
-                            "↓ ${day.minTemp.toStringAsFixed(1)}°",
+                            "↓ ${minTemp.toStringAsFixed(1)}$unitText",
                             style: textTheme.bodyMedium?.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w500,

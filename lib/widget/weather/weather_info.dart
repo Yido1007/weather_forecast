@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_forecast/provider/temperature.dart';
 import '../../model/weather.dart';
 import '../../provider/favorite.dart';
 import '../../service/lottie_func.dart';
+import '../../service/temperature.dart';
 import 'info_item.dart';
 
 class WeatherInfo extends StatelessWidget {
@@ -18,6 +20,10 @@ class WeatherInfo extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final favoriteProvider = Provider.of<FavoriteProvider>(context);
     final isFavorite = favoriteProvider.isFavorite(weather.cityName);
+    final unitProvider = Provider.of<TemperatureUnitProvider>(context);
+    final unit = unitProvider.unit;
+    final double temp = convertTemperature(weather.temperature, unit);
+    final String unitSymbolText = unitSymbol(unit);
 
     return Card(
       color: colorScheme.surface,
@@ -82,7 +88,7 @@ class WeatherInfo extends StatelessWidget {
                   ),
                   const Gap(8),
                   Text(
-                    '${weather.temperature.toStringAsFixed(1)}°C',
+                    '${temp.toStringAsFixed(1)} $unitSymbolText',
                     style: textTheme.displaySmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: colorScheme.primary,
