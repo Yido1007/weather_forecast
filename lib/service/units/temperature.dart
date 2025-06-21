@@ -21,3 +21,14 @@ String unitSymbol(TemperatureUnit unit) {
       return 'K';
   }
 }
+
+String temperatureUnitFullName(TemperatureUnit temperatureunit) {
+  switch (temperatureunit) {
+    case TemperatureUnit.celsius:
+      return 'Santigrat (°C)';
+    case TemperatureUnit.fahrenheit:
+      return 'Fahrenheit (°F)';
+    case TemperatureUnit.kelvin:
+      return 'Kelvin (K)';
+  }
+}

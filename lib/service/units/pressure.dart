@@ -13,8 +13,8 @@ double convertPressure(double value, PressureUnit unit) {
   }
 }
 
-String pressureUnitFullName(PressureUnit unit) {
-  switch (unit) {
+String pressureUnitFullName(PressureUnit pressureunitname) {
+  switch (pressureunitname) {
     case PressureUnit.hpa:
       return 'Hektopascal (hPa)';
     case PressureUnit.mmhg:

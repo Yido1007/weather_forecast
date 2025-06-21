@@ -10,6 +10,7 @@ import 'package:weather_forecast/screen/core/startup.dart';
 import 'package:weather_forecast/provider/theme.dart';
 import 'package:weather_forecast/service/units/pressure.dart';
 import 'package:weather_forecast/service/units/temperature.dart';
+import 'package:weather_forecast/widget/unit_selector.dart';
 
 class SettingsScreen extends StatelessWidget {
   void showPressureUnitDialog(BuildContext context) {
@@ -76,14 +77,73 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  void showTemperatureUnitDialog(BuildContext context) {
+    final unitProvider = Provider.of<TemperatureUnitProvider>(
+      context,
+      listen: false,
+    );
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Sıcaklık Birimi Seç'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<TemperatureUnit>(
+                title: const Text('Santigrat (°C)'),
+                value: TemperatureUnit.celsius,
+                groupValue: unitProvider.unit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              RadioListTile<TemperatureUnit>(
+                title: const Text('Fahrenheit (°F)'),
+                value: TemperatureUnit.fahrenheit,
+                groupValue: unitProvider.unit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              RadioListTile<TemperatureUnit>(
+                title: const Text('Kelvin (K)'),
+                value: TemperatureUnit.kelvin,
+                groupValue: unitProvider.unit,
+                onChanged: (value) {
+                  if (value != null) {
+                    unitProvider.setUnit(value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    //temperature Provider
     final unitProvider = Provider.of<TemperatureUnitProvider>(context);
-    final unit = Provider.of<PressureUnitProvider>(context).pressureUnit;
-    final unitName = pressureUnitFullName(unit);
+    final tempUnitProvider = Provider.of<TemperatureUnitProvider>(context);
+    final tempUnit = tempUnitProvider.unit;
+    final tempUnitName = temperatureUnitFullName(tempUnit);
+    //pressure Provider
+    final pressureUnitProvider = Provider.of<PressureUnitProvider>(context);
+    final pressureUnit = pressureUnitProvider.pressureUnit;
+    final pressureUnitName = pressureUnitFullName(pressureUnit);
     return Scaffold(
       appBar: AppBar(title: Text('settings'.tr())),
       body: Padding(
@@ -106,74 +166,20 @@ class SettingsScreen extends StatelessWidget {
             ),
             const Gap(24),
             //Temperature unit
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Sıcaklık Birimi", style: TextStyle(fontSize: 18)),
-                PopupMenuButton<TemperatureUnit>(
-                  child: Row(
-                    children: [
-                      Text(unitSymbol(unitProvider.unit)),
-                      Icon(Icons.arrow_drop_down),
-                    ],
-                  ),
-                  onSelected: (unit) {
-                    unitProvider.setUnit(unit);
-                  },
-                  itemBuilder:
-                      (context) => [
-                        PopupMenuItem(
-                          value: TemperatureUnit.celsius,
-                          child: Text('Santigrat (°C)'),
-                        ),
-                        PopupMenuItem(
-                          value: TemperatureUnit.fahrenheit,
-                          child: Text('Fahrenheit (°F)'),
-                        ),
-                        PopupMenuItem(
-                          value: TemperatureUnit.kelvin,
-                          child: Text('Kelvin (K)'),
-                        ),
-                      ],
-                ),
-              ],
+            SettingUnitRow(
+              icon: Icons.thermostat,
+              iconColor: Colors.redAccent.shade200,
+              title: "Sıcaklık Birimi",
+              subtitle: tempUnitName, // örn: temperatureUnitFullName(tempUnit)
+              onTap: () => showTemperatureUnitDialog(context),
             ),
             //Pressure unit
-            InkWell(
-              borderRadius: BorderRadius.circular(10),
+            SettingUnitRow(
+              icon: Icons.speed,
+              iconColor: Colors.blueAccent,
+              title: "Basınç Birimi",
+              subtitle: pressureUnitName,
               onTap: () => showPressureUnitDialog(context),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 14,
-                  horizontal: 6,
-                ),
-                child: Row(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.speed, color: Colors.blueAccent),
-                        const Gap(15),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Basınç Birimi",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              unitName,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
             ),
             // Onboarding Reset
             ElevatedButton(
