@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_forecast/provider/temperature.dart';
+import 'package:weather_forecast/provider/units/temperature.dart';
 import '../../model/weather.dart';
 import '../../provider/favorite.dart';
 import '../../service/lottie_func.dart';

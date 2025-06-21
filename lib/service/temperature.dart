@@ -1,4 +1,4 @@
-import 'package:weather_forecast/provider/temperature.dart';
+import 'package:weather_forecast/provider/units/temperature.dart';
 
 double convertTemperature(double value, TemperatureUnit unit) {
   switch (unit) {

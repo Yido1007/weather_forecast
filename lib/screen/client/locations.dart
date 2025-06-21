@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_forecast/provider/favorite.dart';
-import 'package:weather_forecast/provider/temperature.dart';
+import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/service/temperature.dart';
 

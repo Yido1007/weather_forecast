@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_forecast/provider/temperature.dart';
+import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/core/startup.dart';
 import 'package:weather_forecast/provider/theme.dart';
