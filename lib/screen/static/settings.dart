@@ -10,7 +10,8 @@ import 'package:weather_forecast/provider/theme.dart';
 import 'package:weather_forecast/service/units/pressure.dart';
 import 'package:weather_forecast/service/units/temperature.dart';
 import 'package:weather_forecast/service/units/wind.dart';
-import 'package:weather_forecast/widget/unit_selector.dart';
+import 'package:weather_forecast/widget/settings/text.dart';
+import 'package:weather_forecast/widget/settings/unit_selector.dart';
 
 class SettingsScreen extends StatelessWidget {
   //pressure unit alert dialog
@@ -283,6 +284,7 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Theme
+            SettingText(title: "theme".tr()),
             SettingUnitRow(
               icon: isDark ? Icons.nightlight_round : Icons.wb_sunny,
               iconColor: isDark ? Colors.amber : Colors.deepOrange,
@@ -292,16 +294,7 @@ class SettingsScreen extends StatelessWidget {
             ),
             Divider(thickness: 2),
             //units
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                "units".tr(),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 18,
-                ),
-              ),
-            ),
+            SettingText(title: "units".tr()),
             //Temperature unit
             SettingUnitRow(
               icon: Icons.thermostat,
@@ -328,16 +321,8 @@ class SettingsScreen extends StatelessWidget {
             ),
             Divider(thickness: 2),
             //Language
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                "lang".tr(),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 18,
-                ),
-              ),
-            ), //Change language
+            SettingText(title: "lang".tr()),
+            //Change language
             SettingUnitRow(
               icon: Icons.language,
               iconColor: Colors.orange,
