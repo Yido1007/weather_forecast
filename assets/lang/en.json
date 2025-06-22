@@ -40,5 +40,20 @@
     "weather-news": "Weather Forecast News",
     "not-location": "The location could not be found.",
     "no-news": "No news found",
-    "news-detail": "News Detail"
+    "news-detail": "News Detail",
+    "pressure_unit": "Pressure Unit",
+    "temperature_unit": "Temperature Unit",
+    "wind_unit": "Wind Speed Unit",
+    "hpa": "Hectopascal (hPa)",
+    "mmhg": "Millimeter Mercury (mmHg)",
+    "atm": "Atmosphere (atm)",
+    "psi": "Psi (psi)",
+    "units": "Units",
+    "celsius": "Celsius (°C)",
+    "select-temp-unit": "Select the Temperature Unit",
+    "select-press-unit": "Select the Pressure Unit",
+    "select-wind-unit": "Select the Wind Unit",
+    "km/hour": "Kilometers/Hour (km/h)",
+    "m/s": "Meters/Second (m/s)",
+    "m/h": "Miles/Hour (mph)"
 }

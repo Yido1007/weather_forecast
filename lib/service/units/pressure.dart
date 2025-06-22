@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:weather_forecast/provider/units/pressure.dart';
 
 double convertPressure(double value, PressureUnit unit) {
@@ -13,16 +14,16 @@ double convertPressure(double value, PressureUnit unit) {
   }
 }
 
-String pressureUnitFullName(PressureUnit pressureunitname) {
-  switch (pressureunitname) {
+String pressureUnitFullName(PressureUnit unit) {
+  switch (unit) {
     case PressureUnit.hpa:
-      return 'Hektopascal (hPa)';
+      return "hpa".tr();
     case PressureUnit.mmhg:
-      return 'Milimetre Cıva (mmHg)';
+      return "mmhg".tr();
     case PressureUnit.atm:
-      return 'Atmosfer (atm)';
+      return "atm".tr();
     case PressureUnit.psi:
-      return 'Psi (psi)';
+      return "psi".tr();
   }
 }
 

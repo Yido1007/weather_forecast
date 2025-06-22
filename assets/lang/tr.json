@@ -40,6 +40,20 @@
     "weather-news": "Hava Durumu Haberleri",
     "not-location": "Konum Bulunamadı",
     "no-news": "Haber Bulunamadı",
-    "news-detail": "Haber Detayı"
-    
+    "news-detail": "Haber Detayı",
+    "pressure_unit": "Basınç Birimi",
+    "temperature_unit": "Sıcaklık Birimi",
+    "wind_unit": "Rüzgar Hızı Birimi",
+    "hpa": "Hektopaskal (hPa)",
+    "mmhg": "Milimetre Cıva (mmHg)",
+    "atm": "Atmosfer (atm)",
+    "psi": "Psi (psi)",
+    "units": "Birimler",
+    "celsius": "Santigrat (°C)",
+    "select-temp-unit": "Sıcaklık Birimini Seç",
+    "select-press-unit": "Basınç Birimini Seç",
+    "select-wind-unit": "Rüzgar Birimini Seç",
+    "km/hour": "Kilometre/Saat (km/s)",
+    "m/s": "Metre/Saniye (m/s)",
+    "mph": "Mil/Saat (mph)"
 }

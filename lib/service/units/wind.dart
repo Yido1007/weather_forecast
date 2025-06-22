@@ -1,5 +1,4 @@
-
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:weather_forecast/provider/units/wind.dart';
 
 double convertWindSpeed(double value, WindSpeedUnit unit) {
@@ -16,11 +15,11 @@ double convertWindSpeed(double value, WindSpeedUnit unit) {
 String windSpeedUnitFullName(WindSpeedUnit unit) {
   switch (unit) {
     case WindSpeedUnit.kmh:
-      return 'Kilometre/Saat (km/s)';
+      return 'km/hour'.tr();
     case WindSpeedUnit.ms:
-      return 'Metre/Saniye (m/s)';
+      return 'm/s'.tr();
     case WindSpeedUnit.mph:
-      return 'Mil/Saat (mph)';
+      return 'mph'.tr();
   }
 }
 

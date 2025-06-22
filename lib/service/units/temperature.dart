@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
 
 double convertTemperature(double value, TemperatureUnit unit) {
@@ -25,7 +26,7 @@ String unitSymbol(TemperatureUnit unit) {
 String temperatureUnitFullName(TemperatureUnit temperatureunit) {
   switch (temperatureunit) {
     case TemperatureUnit.celsius:
-      return 'Santigrat (°C)';
+      return 'celsius'.tr();
     case TemperatureUnit.fahrenheit:
       return 'Fahrenheit (°F)';
     case TemperatureUnit.kelvin:

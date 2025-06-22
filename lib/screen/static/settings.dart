@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/provider/units/pressure.dart';
@@ -24,12 +23,12 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Basınç Birimi Seç'),
+          title: Text('select-press-unit'.tr()),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile<PressureUnit>(
-                title: const Text('hPa (Hektopascal)'),
+                title: Text("hpa".tr()),
                 value: PressureUnit.hpa,
                 groupValue: unitProvider.pressureUnit,
                 onChanged: (value) {
@@ -40,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               RadioListTile<PressureUnit>(
-                title: const Text('mmHg (Milimetre Cıva)'),
+                title: Text("mmhg".tr()),
                 value: PressureUnit.mmhg,
                 groupValue: unitProvider.pressureUnit,
                 onChanged: (value) {
@@ -51,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               RadioListTile<PressureUnit>(
-                title: const Text('atm (Atmosfer)'),
+                title: Text('atm'.tr()),
                 value: PressureUnit.atm,
                 groupValue: unitProvider.pressureUnit,
                 onChanged: (value) {
@@ -62,7 +61,7 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               RadioListTile<PressureUnit>(
-                title: const Text('psi'),
+                title: Text('psi'.tr()),
                 value: PressureUnit.psi,
                 groupValue: unitProvider.pressureUnit,
                 onChanged: (value) {
@@ -88,12 +87,12 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Sıcaklık Birimi Seç'),
+          title: Text('select-temp-unit'.tr()),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile<TemperatureUnit>(
-                title: const Text('Santigrat (°C)'),
+                title: Text('celsius'.tr()),
                 value: TemperatureUnit.celsius,
                 groupValue: unitProvider.unit,
                 onChanged: (value) {
@@ -141,12 +140,12 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Rüzgar Hızı Birimi Seç'),
+          title: Text('select-wind-unit'.tr()),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile<WindSpeedUnit>(
-                title: const Text('Kilometre/Saat (km/s)'),
+                title: Text('km/hour'.tr()),
                 value: WindSpeedUnit.kmh,
                 groupValue: unitProvider.windSpeedUnit,
                 onChanged: (value) {
@@ -157,7 +156,7 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               RadioListTile<WindSpeedUnit>(
-                title: const Text('Metre/Saniye (m/s)'),
+                title: Text('m/s'.tr()),
                 value: WindSpeedUnit.ms,
                 groupValue: unitProvider.windSpeedUnit,
                 onChanged: (value) {
@@ -168,7 +167,7 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               RadioListTile<WindSpeedUnit>(
-                title: const Text('Mil/Saat (mph)'),
+                title: Text('m/s'.tr()),
                 value: WindSpeedUnit.mph,
                 groupValue: unitProvider.windSpeedUnit,
                 onChanged: (value) {
@@ -208,6 +207,7 @@ class SettingsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Theme Switch
             //ALERT DİALOG İLE GÖSTERİM SAĞLANABİLİR!!
@@ -223,29 +223,41 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(24),
+            Divider(thickness: 2),
+            //units
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                "Birimler",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 18,
+                ),
+              ),
+            ),
             //Temperature unit
             SettingUnitRow(
               icon: Icons.thermostat,
               iconColor: Colors.redAccent.shade200,
-              title: "Sıcaklık Birimi",
-              subtitle: tempUnitName, // örn: temperatureUnitFullName(tempUnit)
+              title: "temperature_unit".tr(),
+              subtitle:
+                  tempUnitName.tr(), // örn: temperatureUnitFullName(tempUnit)
               onTap: () => showTemperatureUnitDialog(context),
             ),
             //Pressure unit
             SettingUnitRow(
               icon: Icons.speed,
               iconColor: Colors.blueAccent,
-              title: "Basınç Birimi",
-              subtitle: pressureUnitName,
+              title: "pressure_unit".tr(),
+              subtitle: pressureUnitName.tr(),
               onTap: () => showPressureUnitDialog(context),
             ),
             //Wind unit
             SettingUnitRow(
               icon: Icons.air,
               iconColor: Colors.green.shade400,
-              title: "Rüzgar Hızı Birimi",
-              subtitle: windSpeedUnitName,
+              title: "wind_unit".tr(),
+              subtitle: windSpeedUnitName.tr(),
               onTap: () => showWindSpeedUnitDialog(context),
             ),
             // Onboarding Reset
