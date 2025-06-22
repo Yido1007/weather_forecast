@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/provider/units/wind.dart';
-import 'package:weather_forecast/provider/weather.dart';
 import 'package:weather_forecast/screen/core/startup.dart';
 import 'package:weather_forecast/provider/theme.dart';
 import 'package:weather_forecast/service/units/pressure.dart';
@@ -14,6 +13,7 @@ import 'package:weather_forecast/service/units/wind.dart';
 import 'package:weather_forecast/widget/unit_selector.dart';
 
 class SettingsScreen extends StatelessWidget {
+  //pressure unit alert dialog
   void showPressureUnitDialog(BuildContext context) {
     final unitProvider = Provider.of<PressureUnitProvider>(
       context,
@@ -78,6 +78,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  //temperature unit alert dialog
   void showTemperatureUnitDialog(BuildContext context) {
     final unitProvider = Provider.of<TemperatureUnitProvider>(
       context,
@@ -131,6 +132,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  //wind unit alert dialog
   void showWindSpeedUnitDialog(BuildContext context) {
     final unitProvider = Provider.of<WindSpeedUnitProvider>(
       context,
@@ -181,6 +183,38 @@ class SettingsScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  //change language alert dialog
+  void showLanguageSelectDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text('select-lang'.tr()),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Text('🇹🇷', style: TextStyle(fontSize: 24)),
+                  title: const Text('Türkçe'),
+                  onTap: () async {
+                    await context.setLocale(const Locale('tr'));
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Text('🇬🇧', style: TextStyle(fontSize: 24)),
+                  title: const Text('English'),
+                  onTap: () async {
+                    await context.setLocale(const Locale('en'));
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
     );
   }
 
@@ -240,8 +274,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.thermostat,
               iconColor: Colors.redAccent.shade200,
               title: "temperature_unit".tr(),
-              subtitle:
-                  tempUnitName.tr(), // örn: temperatureUnitFullName(tempUnit)
+              subtitle: tempUnitName.tr(),
               onTap: () => showTemperatureUnitDialog(context),
             ),
             //Pressure unit
@@ -260,6 +293,15 @@ class SettingsScreen extends StatelessWidget {
               subtitle: windSpeedUnitName.tr(),
               onTap: () => showWindSpeedUnitDialog(context),
             ),
+            //Change language
+            SettingUnitRow(
+              icon: Icons.language,
+              iconColor: Colors.orange,
+              title: "app-lang".tr(),
+              subtitle:
+                  context.locale.languageCode == 'tr' ? "Türkçe" : "English",
+              onTap: () => showLanguageSelectDialog(context),
+            ),
             // Onboarding Reset
             ElevatedButton(
               onPressed: () async {
@@ -272,31 +314,6 @@ class SettingsScreen extends StatelessWidget {
                 );
               },
               child: const Text("Onboarding Sıfırla"),
-            ),
-            // Change Language
-            ElevatedButton(
-              onPressed: () async {
-                await context.setLocale(const Locale('en'));
-                final weatherProvider = Provider.of<WeatherProvider>(
-                  context,
-                  listen: false,
-                );
-                final currentCity = weatherProvider.weather?.cityName ?? "";
-                await weatherProvider.fetchWeather(currentCity, context);
-              },
-              child: const Text("English"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await context.setLocale(const Locale('tr'));
-                final weatherProvider = Provider.of<WeatherProvider>(
-                  context,
-                  listen: false,
-                );
-                final currentCity = weatherProvider.weather?.cityName ?? "";
-                await weatherProvider.fetchWeather(currentCity, context);
-              },
-              child: const Text("Türkçe"),
             ),
           ],
         ),

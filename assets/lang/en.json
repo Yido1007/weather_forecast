@@ -55,5 +55,7 @@
     "select-wind-unit": "Select the Wind Unit",
     "km/hour": "Kilometers/Hour (km/h)",
     "m/s": "Meters/Second (m/s)",
-    "m/h": "Miles/Hour (mph)"
+    "m/h": "Miles/Hour (mph)",
+    "select-lang": "Select Language",
+    "app-lang": "Application Language"
 }

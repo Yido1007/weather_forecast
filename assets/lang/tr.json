@@ -55,5 +55,7 @@
     "select-wind-unit": "Rüzgar Birimini Seç",
     "km/hour": "Kilometre/Saat (km/s)",
     "m/s": "Metre/Saniye (m/s)",
-    "mph": "Mil/Saat (mph)"
+    "mph": "Mil/Saat (mph)",
+    "select-lang": "Dili Seç",
+    "app-lang":"Uygulama Dili"
 }
