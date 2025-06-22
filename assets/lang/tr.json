@@ -11,6 +11,9 @@
     "fav": "Favorilere Ekle",
     "unfav": "Favorilerden Kaldır",
     "theme": "Tema",
+    "dark":"Koyu Tema",
+    "light": "Açık Tema",
+    "select-theme":"Select Theme",
     "humidity": "Nem",
     "wind": "Rüzgar",
     "pressure": "Basınç",
@@ -57,5 +60,6 @@
     "m/s": "Metre/Saniye (m/s)",
     "mph": "Mil/Saat (mph)",
     "select-lang": "Dili Seç",
-    "app-lang":"Uygulama Dili"
+    "app-lang":"Uygulama Dili",
+    "lang":"Dil"
 }

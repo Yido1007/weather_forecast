@@ -218,11 +218,48 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  //change theme alert dialog
+  void showThemeSelectDialog(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text('select-theme'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.light_mode, color: Colors.amber),
+                  title: Text('light'.tr()),
+                  onTap: () {
+                    if (themeProvider.isDarkMode) {
+                      themeProvider.toggleTheme();
+                    }
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.dark_mode, color: Colors.blueGrey),
+                  title: Text('dark'.tr()),
+                  onTap: () {
+                    if (!themeProvider.isDarkMode) {
+                      themeProvider.toggleTheme();
+                    }
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+    );
+  }
+
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     //temperature Provider
     final unitProvider = Provider.of<TemperatureUnitProvider>(context);
     final tempUnitProvider = Provider.of<TemperatureUnitProvider>(context);
@@ -236,6 +273,8 @@ class SettingsScreen extends StatelessWidget {
     final windSpeedProvider = Provider.of<WindSpeedUnitProvider>(context);
     final windSpeedUnit = windSpeedProvider.windSpeedUnit;
     final windSpeedUnitName = windSpeedUnitFullName(windSpeedUnit);
+    //theme
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(title: Text('settings'.tr())),
       body: Padding(
@@ -243,26 +282,20 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //Theme Switch
-            //ALERT DİALOG İLE GÖSTERİM SAĞLANABİLİR!!
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("theme".tr(), style: const TextStyle(fontSize: 18)),
-                Switch(
-                  value: themeProvider.isDarkMode,
-                  onChanged: (value) {
-                    themeProvider.toggleTheme();
-                  },
-                ),
-              ],
+            //Theme
+            SettingUnitRow(
+              icon: isDark ? Icons.nightlight_round : Icons.wb_sunny,
+              iconColor: isDark ? Colors.amber : Colors.deepOrange,
+              title: "theme".tr(),
+              subtitle: isDark ? "dark".tr() : "light".tr(),
+              onTap: () => showThemeSelectDialog(context),
             ),
             Divider(thickness: 2),
             //units
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                "Birimler",
+                "units".tr(),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 18,
@@ -293,7 +326,18 @@ class SettingsScreen extends StatelessWidget {
               subtitle: windSpeedUnitName.tr(),
               onTap: () => showWindSpeedUnitDialog(context),
             ),
-            //Change language
+            Divider(thickness: 2),
+            //Language
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                "lang".tr(),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 18,
+                ),
+              ),
+            ), //Change language
             SettingUnitRow(
               icon: Icons.language,
               iconColor: Colors.orange,

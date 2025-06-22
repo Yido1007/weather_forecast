@@ -11,6 +11,8 @@
     "fav": "Add to Favorites",
     "unfav": "Remove From Favorites",
     "theme": "Theme",
+    "dark": "Dark Theme",
+    "light": "Light Theme",
     "humidity": "Humidity",
     "wind": "Wind",
     "pressure": "Pressure",
@@ -57,5 +59,6 @@
     "m/s": "Meters/Second (m/s)",
     "m/h": "Miles/Hour (mph)",
     "select-lang": "Select Language",
-    "app-lang": "Application Language"
+    "app-lang": "Application Language",
+    "lang": "Language"
 }
