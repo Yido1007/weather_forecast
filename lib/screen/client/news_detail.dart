@@ -44,13 +44,13 @@ class NewsDetailPage extends StatelessWidget {
             if ((article['description'] ?? '').isNotEmpty)
               Text(
                 article['description'] ?? '',
-                style: const TextStyle(fontSize: 16, color: Colors.black87),
+                style: const TextStyle(fontSize: 16),
               ),
             const Gap(16),
             if ((article['content'] ?? '').isNotEmpty)
               Text(
                 cleanContent(article['content']),
-                style: const TextStyle(fontSize: 16, color: Colors.black87),
+                style: const TextStyle(fontSize: 16),
               ),
             const Gap(24),
           ],

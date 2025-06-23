@@ -73,7 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final weatherProvider = Provider.of<WeatherProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('title'.tr()), centerTitle: true),
+      appBar: AppBar(
+        title: Text('title'.tr()),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+      ),
       drawer: AppDrawer(
         onCitySelected: (city) async {
           _cityController.text = city;
@@ -136,11 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (weatherProvider.weather != null) ...[
                   WeatherInfo(weather: weatherProvider.weather!),
                   const Gap(10),
-                  SizedBox(
-                    height: 220,
-                    child: HourlyWeatherWidget(
-                    ),
-                  ),
+                  SizedBox(height: 220, child: HourlyWeatherWidget()),
                   const Gap(10),
                   WeeklyWeatherWidget(),
                 ],
