@@ -60,4 +60,8 @@ Kapsamlı, çok dilli ve modern tasarımlı bir Flutter hava durumu uygulaması.
 ```
 4.Uygulamayı başlatın
 ```sh
-    flutter run 
+    flutter run
+```
+## Lisans
+
+Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
