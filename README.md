@@ -2,6 +2,8 @@
 
 Kapsamlı, çok dilli ve modern tasarımlı bir Flutter hava durumu uygulaması.
 
+[English](README.en.md) | [Türkçe](README.md)
+
 ## Özellikler
 
 - 🔄 **Gerçek zamanlı hava durumu** ve saatlik/günlük tahminler
