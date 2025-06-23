@@ -213,6 +213,38 @@ class SettingsScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
+                ListTile(
+                  leading: const Text('🇫🇷', style: TextStyle(fontSize: 24)),
+                  title: const Text('Français'),
+                  onTap: () async {
+                    await context.setLocale(const Locale('fr'));
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Text('🇪🇸', style: TextStyle(fontSize: 24)),
+                  title: const Text('Español'),
+                  onTap: () async {
+                    await context.setLocale(const Locale('es'));
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Text('🇩🇪', style: TextStyle(fontSize: 24)),
+                  title: const Text('Deutsch'),
+                  onTap: () async {
+                    await context.setLocale(const Locale('de'));
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Text('🇮🇹', style: TextStyle(fontSize: 24)),
+                  title: const Text('Italiano'),
+                  onTap: () async {
+                    await context.setLocale(const Locale('it'));
+                    Navigator.pop(context);
+                  },
+                ),
               ],
             ),
           ),
@@ -327,8 +359,24 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.language,
               iconColor: Colors.orange,
               title: "app-lang".tr(),
-              subtitle:
-                  context.locale.languageCode == 'tr' ? "Türkçe" : "English",
+              subtitle: () {
+                switch (context.locale.languageCode) {
+                  case 'tr':
+                    return 'Türkçe';
+                  case 'en':
+                    return 'English';
+                  case 'es':
+                    return 'Español';
+                  case 'fr':
+                    return 'Français';
+                  case 'de':
+                    return 'Deutsch';
+                  case "it":
+                    return "Italiano";
+                  default:
+                    return context.locale.languageCode;
+                }
+              }(),
               onTap: () => showLanguageSelectDialog(context),
             ),
             // Onboarding Reset
