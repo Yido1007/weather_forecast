@@ -66,5 +66,12 @@
     "permission-settings": "El permiso debe concederse desde la configuración",
     "permission": "Permisos",
     "location-permission": "Permiso de ubicación",
-    "grant-location": "Concede permiso de ubicación"
+    "grant-location": "Concede permiso de ubicación",
+    "alert_hot": "Alerta de calor extremo",
+    "msg_hot": "¡La temperatura en {{city}} supera los {{temp}}°C!",
+    "alert_cold": "Alerta de frío extremo",
+    "msg_cold": "¡La temperatura en {{city}} está por debajo de 0°C!",
+    "alert_storm": "Alerta de tormenta",
+    "msg_storm": "¡La velocidad del viento en {{city}} es muy alta ({{wind}} m/s)!",
+    "msg_storm_desc": "¡Se espera una tormenta en {{city}}!"
 }

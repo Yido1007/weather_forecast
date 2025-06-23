@@ -66,5 +66,12 @@
     "permission-settings": "Permission Must Be Granted From Settings",
     "permission": "Permissions",
     "location-permission": "Location Permission",
-    "grant-location": "Grant Location Permission"
+    "grant-location": "Grant Location Permission",
+    "alert_hot": "Extreme Heat Warning",
+    "msg_hot": "Temperature in {{city}} is above {{temp}}°C!",
+    "alert_cold": "Extreme Cold Warning",
+    "msg_cold": "Temperature in {{city}} is below 0°C!",
+    "alert_storm": "Storm Warning",
+    "msg_storm": "Wind speed is very high in {{city}} ({{wind}} m/s)!",
+    "msg_storm_desc": "A storm is expected in {{city}}!"
 }

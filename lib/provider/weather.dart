@@ -57,7 +57,7 @@ class WeatherProvider with ChangeNotifier {
         final jsonData = json.decode(response.body);
         _weather = Weather.fromJson(jsonData);
         _isLoading = false;
-        checkSevereWeather(_weather!);
+        checkSevereWeather(_weather!, context);
       } else {
         _weather = null;
         _errorMessage = 'Veri alınamadı (${response.statusCode})';
@@ -180,32 +180,45 @@ class WeatherProvider with ChangeNotifier {
     return _lastSearchedCity;
   }
 
-  void checkSevereWeather(Weather weather) {
+  //extreme weather notifications
+  void checkSevereWeather(Weather weather, BuildContext context) {
     if (!(Platform.isAndroid || Platform.isIOS)) return;
 
     if (weather.temperature > 38) {
       showWeatherNotification(
-        "Aşırı Sıcaklık Uyarısı",
-        "${weather.cityName} için sıcaklık ${weather.temperature.toStringAsFixed(1)}°C'nin üzerinde!",
+        tr("alert_hot"),
+        tr(
+          "msg_hot",
+          namedArgs: {
+            "city": weather.cityName,
+            "temp": weather.temperature.toStringAsFixed(1),
+          },
+        ),
       );
     }
     if (weather.temperature < 0) {
       showWeatherNotification(
-        "Aşırı Soğuk Uyarısı",
-        "${weather.cityName} için sıcaklık 0°C'nin altında!",
+        tr("alert_cold"),
+        tr("msg_cold", namedArgs: {"city": weather.cityName}),
       );
     }
     if (weather.windSpeed > 15) {
       showWeatherNotification(
-        "Fırtına Uyarısı",
-        "${weather.cityName} için rüzgar hızı çok yüksek (${weather.windSpeed} m/s)!",
+        tr("alert_storm"),
+        tr(
+          "msg_storm",
+          namedArgs: {
+            "city": weather.cityName,
+            "wind": weather.windSpeed.toStringAsFixed(1),
+          },
+        ),
       );
     }
     if (weather.description.contains("fırtına") ||
         weather.description.toLowerCase().contains("storm")) {
       showWeatherNotification(
-        "Fırtına Uyarısı",
-        "${weather.cityName} için fırtına bekleniyor!",
+        tr("alert_storm"),
+        tr("msg_storm_desc", namedArgs: {"city": weather.cityName}),
       );
     }
   }

@@ -66,5 +66,12 @@
     "permission-settings": "Die Berechtigung muss in den Einstellungen erteilt werden",
     "permission": "Berechtigungen",
     "location-permission": "Standortberechtigung",
-    "grant-location": "Standortberechtigung erteilen"
+    "grant-location": "Standortberechtigung erteilen",
+    "alert_hot": "Extreme Hitzewarnung",
+    "msg_hot": "Temperatur in {{city}} liegt über {{temp}}°C!",
+    "alert_cold": "Extreme Kältewarnung",
+    "msg_cold": "Temperatur in {{city}} liegt unter 0°C!",
+    "alert_storm": "Sturmwarnung",
+    "msg_storm": "In {{city}} ist die Windgeschwindigkeit sehr hoch ({{wind}} m/s)!",
+    "msg_storm_desc": "Ein Sturm wird in {{city}} erwartet!"
 }

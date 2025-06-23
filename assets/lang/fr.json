@@ -66,5 +66,12 @@
     "permission-settings": " L’autorisation doit être accordée depuis les paramètres",
     "permission": "Autorisations",
     "location-permission": "Autorisation de localisation",
-    "grant-location": "Accorder l’autorisation de localisation"
+    "grant-location": "Accorder l’autorisation de localisation",
+    "alert_hot": "Alerte canicule",
+    "msg_hot": "La température à {{city}} est supérieure à {{temp}}°C !",
+    "alert_cold": "Alerte grand froid",
+    "msg_cold": "La température à {{city}} est inférieure à 0°C !",
+    "alert_storm": "Alerte tempête",
+    "msg_storm": "La vitesse du vent à {{city}} est très élevée ({{wind}} m/s) !",
+    "msg_storm_desc": "Une tempête est prévue à {{city}} !"
 }

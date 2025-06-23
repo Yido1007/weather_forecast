@@ -66,6 +66,13 @@
     "permission-dennied": "Konum İzni Reddedildi!",
     "permission-settings": "İzin ayarlardan verilmelidir.",
     "permission": "İzinler",
-    "location-permission":"Konum İzni",
-    "grant-location":"Konum izni ver"
+    "location-permission": "Konum İzni",
+    "grant-location": "Konum izni ver",
+    "alert_hot": "Aşırı Sıcaklık Uyarısı",
+    "msg_hot": "{{city}} için sıcaklık {{temp}}°C'nin üzerinde!",
+    "alert_cold": "Aşırı Soğuk Uyarısı",
+    "msg_cold": "{{city}} için sıcaklık 0°C'nin altında!",
+    "alert_storm": "Fırtına Uyarısı",
+    "msg_storm": "{{city}} için rüzgar hızı çok yüksek ({{wind}} m/s)!",
+    "msg_storm_desc": "{{city}} için fırtına bekleniyor!"
 }

@@ -66,5 +66,12 @@
     "permission-settings": "L’autorizzazione deve essere concessa dalle impostazioni",
     "permission": "Autorizzazioni",
     "location-permission": "Autorizzazione alla posizione",
-    "grant-location": "Concedi autorizzazione alla posizione"
+    "grant-location": "Concedi autorizzazione alla posizione",
+    "alert_hot": "Allerta caldo estremo",
+    "msg_hot": "La temperatura a {{city}} supera i {{temp}}°C!",
+    "alert_cold": "Allerta freddo estremo",
+    "msg_cold": "La temperatura a {{city}} è inferiore a 0°C!",
+    "alert_storm": "Allerta tempesta",
+    "msg_storm": "La velocità del vento a {{city}} è molto alta ({{wind}} m/s)!",
+    "msg_storm_desc": "È prevista una tempesta a {{city}}!"
 }
