@@ -7,6 +7,7 @@ import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/provider/units/wind.dart';
 import 'package:weather_forecast/screen/core/startup.dart';
 import 'package:weather_forecast/provider/theme.dart';
+import 'package:weather_forecast/service/permission.dart';
 import 'package:weather_forecast/service/units/pressure.dart';
 import 'package:weather_forecast/service/units/temperature.dart';
 import 'package:weather_forecast/service/units/wind.dart';
@@ -378,6 +379,16 @@ class SettingsScreen extends StatelessWidget {
                 }
               }(),
               onTap: () => showLanguageSelectDialog(context),
+            ),
+            //Permission
+            SettingText(title: "İzinler"),
+            Divider(thickness: 2),
+            SettingUnitRow(
+              icon: Icons.my_location,
+              iconColor: Colors.blueAccent,
+              title: 'Konum İzni',
+              subtitle: 'Konum izni ver veya iptal et',
+              onTap: () => requestLocationPermission(context),
             ),
             // Onboarding Reset
             ElevatedButton(
