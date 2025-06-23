@@ -56,5 +56,6 @@ A comprehensive, multi-language, and modernly designed Flutter weather applicati
 ```
 4.Run the application:
 ```sh
-    flutter run 
-
+    flutter run
+```
+This project is licensed with the [MIT License] (LICENSE).
