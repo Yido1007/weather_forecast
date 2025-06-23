@@ -1,11 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/provider/units/pressure.dart';
 import 'package:weather_forecast/provider/units/temperature.dart';
 import 'package:weather_forecast/provider/units/wind.dart';
-import 'package:weather_forecast/screen/core/startup.dart';
 import 'package:weather_forecast/service/permission.dart';
 import 'package:weather_forecast/service/units/pressure.dart';
 import 'package:weather_forecast/service/units/temperature.dart';
@@ -120,18 +118,18 @@ class SettingsScreen extends StatelessWidget {
               onTap: () => requestLocationPermission(context),
             ),
             // Onboarding Reset
-            ElevatedButton(
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.remove('boarding_shown');
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => const StartupRouter()),
-                  (route) => false,
-                );
-              },
-              child: const Text("Onboarding Sıfırla"),
-            ),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     final prefs = await SharedPreferences.getInstance();
+            //     await prefs.remove('boarding_shown');
+            //     Navigator.pushAndRemoveUntil(
+            //       context,
+            //       MaterialPageRoute(builder: (_) => const StartupRouter()),
+            //       (route) => false,
+            //     );
+            //   },
+            //   child: const Text("Onboarding Sıfırla"),
+            // ),
           ],
         ),
       ),
