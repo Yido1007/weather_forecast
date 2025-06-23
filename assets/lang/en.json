@@ -60,5 +60,11 @@
     "m/h": "Miles/Hour (mph)",
     "select-lang": "Select Language",
     "app-lang": "Application Language",
-    "lang": "Language"
+    "lang": "Language",
+    "permission-granted": "Location Permission Granted!",
+    "permission-dennied": "Location Permission Denied",
+    "permission-settings": "Permission Must Be Granted From Settings",
+    "permission": "Permissions",
+    "location-permission": "Location Permission",
+    "grant-location": "Grant Location Permission"
 }

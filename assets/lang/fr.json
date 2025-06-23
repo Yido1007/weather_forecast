@@ -60,5 +60,11 @@
     "m/h": "Miles/Heure (mph)",
     "select-lang": "Sélectionnez la Langue",
     "app-lang": "Langue de l'Application",
-    "lang": "Langue"
+    "lang": "Langue",
+    "permission-granted": "Autorisation de localisation accordée !",
+    "permission-dennied": "Autorisation de localisation refusée !",
+    "permission-settings": " L’autorisation doit être accordée depuis les paramètres",
+    "permission": "Autorisations",
+    "location-permission": "Autorisation de localisation",
+    "grant-location": "Accorder l’autorisation de localisation"
 }

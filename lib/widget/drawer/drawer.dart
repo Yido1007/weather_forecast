@@ -18,6 +18,7 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final weatherProvider = Provider.of<WeatherProvider>(context);
     return Drawer(
+      width: 330,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -381,13 +381,13 @@ class SettingsScreen extends StatelessWidget {
               onTap: () => showLanguageSelectDialog(context),
             ),
             //Permission
-            SettingText(title: "İzinler"),
+            SettingText(title: "permission".tr()),
             Divider(thickness: 2),
             SettingUnitRow(
               icon: Icons.my_location,
               iconColor: Colors.blueAccent,
-              title: 'Konum İzni',
-              subtitle: 'Konum izni ver veya iptal et',
+              title: 'location-permission'.tr(),
+              subtitle: 'grant-location'.tr(),
               onTap: () => requestLocationPermission(context),
             ),
             // Onboarding Reset

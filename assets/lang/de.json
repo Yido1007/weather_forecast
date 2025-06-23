@@ -60,5 +60,11 @@
     "m/h": "Meilen pro Stunde (mph)",
     "select-lang": "Sprache auswählen",
     "app-lang": "Anwendungssprache",
-    "lang": "Sprache"
+    "lang": "Sprache",
+    "permission-granted": "Standortberechtigung erteilt!",
+    "permission-dennied": "Standortberechtigung verweigert!",
+    "permission-settings": "Die Berechtigung muss in den Einstellungen erteilt werden",
+    "permission": "Berechtigungen",
+    "location-permission": "Standortberechtigung",
+    "grant-location": "Standortberechtigung erteilen"
 }

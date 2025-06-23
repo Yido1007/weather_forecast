@@ -60,5 +60,11 @@
     "m/h": "Miglia/Ora (mph)",
     "select-lang": "Seleziona Lingua",
     "app-lang": "Lingua dell'Applicazione",
-    "lang": "Lingua"
+    "lang": "Lingua",
+    "permission-granted": "Autorizzazione alla posizione concessa!",
+    "permission-dennied": "Autorizzazione alla posizione negata!",
+    "permission-settings": "L’autorizzazione deve essere concessa dalle impostazioni",
+    "permission": "Autorizzazioni",
+    "location-permission": "Autorizzazione alla posizione",
+    "grant-location": "Concedi autorizzazione alla posizione"
 }

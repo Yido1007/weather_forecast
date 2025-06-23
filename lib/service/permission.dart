@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -7,15 +8,15 @@ Future<void> requestLocationPermission(BuildContext context) async {
   if (status.isGranted) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text('Konum izni verildi!')));
+    ).showSnackBar(SnackBar(content: Text('permission-granted'.tr())));
   } else if (status.isDenied) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text('Konum izni reddedildi!')));
+    ).showSnackBar(SnackBar(content: Text('permission-dennied'.tr())));
   } else if (status.isPermanentlyDenied) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text('İzin ayarlardan verilmelidir.')));
+    ).showSnackBar(SnackBar(content: Text('permission-settings'.tr())));
     openAppSettings();
   }
 }

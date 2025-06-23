@@ -11,9 +11,9 @@
     "fav": "Favorilere Ekle",
     "unfav": "Favorilerden Kaldır",
     "theme": "Tema",
-    "dark":"Koyu Tema",
+    "dark": "Koyu Tema",
     "light": "Açık Tema",
-    "select-theme":"Select Theme",
+    "select-theme": "Select Theme",
     "humidity": "Nem",
     "wind": "Rüzgar",
     "pressure": "Basınç",
@@ -60,6 +60,12 @@
     "m/s": "Metre/Saniye (m/s)",
     "mph": "Mil/Saat (mph)",
     "select-lang": "Dili Seç",
-    "app-lang":"Uygulama Dili",
-    "lang":"Dil"
+    "app-lang": "Uygulama Dili",
+    "lang": "Dil",
+    "permission-granted": "Konum İzni Verildi!",
+    "permission-dennied": "Konum İzni Reddedildi!",
+    "permission-settings": "İzin ayarlardan verilmelidir.",
+    "permission": "İzinler",
+    "location-permission":"Konum İzni",
+    "grant-location":"Konum izni ver"
 }
